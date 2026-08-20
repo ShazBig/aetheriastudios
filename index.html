@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Legend Of Aetheria — Site Oficial</title>
-    <link rel="icon" type="image/png" href="icone.ico">
+    <link rel="icon" type="image/x-icon" href="icone.ico">
+    <link rel="shortcut icon" type="image/x=icon" href="icone.ico">
     <style>
         * {
             margin: 0;
@@ -12,7 +13,6 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
 
         :root {
             --cor-primaria: #1a1a2e;
@@ -23,13 +23,11 @@
             --cor-card: #1e1e30;
         }
 
-
         body {
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
             line-height: 1.6;
         }
-
 
         /* Cabeçalho e Navegação */
         header {
@@ -41,15 +39,15 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
-
 
         .logo {
             font-size: 1.8rem;
@@ -58,31 +56,30 @@
             text-decoration: none;
         }
 
-
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-
 
         .nav-links a {
             color: var(--cor-texto);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
+            white-space: nowrap;
         }
-
 
         .nav-links a:hover {
             color: var(--cor-destaque);
         }
 
-
         /* Seção Hero — Destaque Principal */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('fundo-lira.png') center top / cover no-repeat;
-            min-height: 85vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -91,9 +88,8 @@
             padding: 2rem;
             background-attachment: fixed;
             background-size: cover;
-            background-position: center top;
+            background-position: center center;
         }
-
 
         .hero h1 {
             font-size: 3.5rem;
@@ -102,13 +98,11 @@
             text-shadow: 0 0 20px rgba(249, 199, 79, 0.5);
         }
 
-
         .hero p {
             font-size: 1.3rem;
             max-width: 800px;
             margin-bottom: 2rem;
         }
-
 
         .btn {
             padding: 0.9rem 2rem;
@@ -121,14 +115,14 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            display: inline-block;
+            text-align: center;
         }
-
 
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 20px rgba(249, 199, 79, 0.4);
         }
-
 
         /* Container Geral */
         .container {
@@ -136,7 +130,6 @@
             margin: 0 auto;
             padding: 3rem 2rem;
         }
-
 
         section h2 {
             font-size: 2rem;
@@ -147,13 +140,11 @@
             display: inline-block;
         }
 
-
         /* Seção — História */
         .historia p {
             margin-bottom: 1.2rem;
             font-size: 1.1rem;
         }
-
 
         /* Seção — Dicas */
         .dicas-grid {
@@ -163,7 +154,6 @@
             margin-top: 2rem;
         }
 
-
         .dica-card {
             background: var(--cor-card);
             padding: 1.5rem;
@@ -172,17 +162,14 @@
             transition: transform 0.3s;
         }
 
-
         .dica-card:hover {
             transform: translateY(-5px);
         }
-
 
         .dica-card h3 {
             color: var(--cor-destaque);
             margin-bottom: 0.8rem;
         }
-
 
         /* Seção — Personagens */
         .personagens-grid {
@@ -190,7 +177,6 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
-
 
         .personagem-card {
             background: var(--cor-card);
@@ -200,17 +186,14 @@
             transition: transform 0.3s;
         }
 
-
         .personagem-card:hover {
             transform: scale(1.05);
         }
-
 
         .personagem-card h3 {
             color: var(--cor-destaque);
             margin: 1rem 0 0.5rem;
         }
-
 
         /* Seção — Galeria */
         .galeria-grid {
@@ -218,7 +201,6 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1rem;
         }
-
 
         .galeria-img {
             background: var(--cor-card);
@@ -232,7 +214,6 @@
             border: 2px dashed var(--cor-destaque);
         }
 
-
         /* Seção — Requisitos */
         .req-table {
             width: 100%;
@@ -240,25 +221,21 @@
             margin-top: 1rem;
         }
 
-
         .req-table th, .req-table td {
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid #333;
         }
 
-
         .req-table th {
             color: var(--cor-destaque);
             background: var(--cor-card);
         }
 
-
         /* Seção — Contato */
         .contato {
             text-align: center;
         }
-
 
         /* Rodapé */
         footer {
@@ -268,12 +245,10 @@
             margin-top: 3rem;
         }
 
-
         footer a {
             color: var(--cor-destaque);
             text-decoration: none;
         }
-
 
         /* Botão voltar ao topo */
         #btn-topo {
@@ -292,24 +267,98 @@
             z-index: 99;
         }
 
-
-        /* Responsividade */
+        /* ✅ RESPONSIVIDADE COMPLETA PARA CELULARES */
         @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
+            header {
+                padding: 1rem;
             }
+
+            .logo {
+                font-size: 1.4rem;
+                text-align: center;
+                width: 100%;
+            }
+
+            .nav-links {
+                gap: 0.7rem;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+
+            .hero {
+                background-attachment: scroll;
+                background-position: center top;
+                background-size: cover;
+                padding: 1.5rem;
+                min-height: 100vh;
+            }
+
             .hero h1 {
                 font-size: 2rem;
+                line-height: 1.2;
             }
-            nav {
-                flex-direction: column;
-                gap: 1rem;
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            .historia p {
+                font-size: 1rem;
+            }
+
+            .dicas-grid,
+            .personagens-grid,
+            .galeria-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .req-table th,
+            .req-table td {
+                padding: 0.7rem;
+                font-size: 0.9rem;
+            }
+
+            footer {
+                padding: 1.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
-
 
     <!-- Cabeçalho / Navegação -->
     <header>
@@ -327,14 +376,12 @@
         </nav>
     </header>
 
-
     <!-- Seção Principal -->
     <section class="hero" id="inicio">
         <h1>The Legend Of Aetheria<br>Guardian of Light</h1>
         <p>Uma aventura épica em um mundo de fantasia. Desvende segredos, derrote inimigos e torne-se a guardiã da luz.</p>
         <a href="#historia" class="btn">Começar Aventura</a>
     </section>
-
 
     <!-- Seção — História -->
     <section class="container historia" id="historia">
@@ -345,7 +392,6 @@
         
         <p>Sua jornada não será fácil. Criaturas corrompidas, quebra-cabeças antigos e segredos esquecidos esperam por você. Mas lembre-se: a coragem não é a ausência do medo, mas sim a vontade de seguir em frente apesar dele. Reúna aliados, encontre relíquias lendárias e prove que você é a verdadeira Guardiã da Luz!</p>
     </section>
-
 
     <!-- Seção — Dicas para Zerar -->
     <section class="container" id="dicas">
@@ -358,42 +404,35 @@
                 <p>Não siga apenas a história principal! Existem cavernas escondidas, baús secretos e personagens com missões secundárias em cada canto do mapa. Muitos itens raros só aparecem em áreas opcionais.</p>
             </div>
 
-
             <div class="dica-card">
                 <h3>⚔️ Melhore suas Armas</h3>
                 <p>Guarde os cristais que encontra pelo caminho — eles servem para evoluir sua espada e arco na Vila dos Ferreiros. Uma arma melhor torna os chefes muito mais fáceis!</p>
             </div>
-
 
             <div class="dica-card">
                 <h3>🏰 Ordem das Torres</h3>
                 <p>Recomendado: 1️⃣ Torre da Floresta → 2️⃣ Torre do Vento → 3️⃣ Torre do Trovão → 4️⃣ Torre da Água → 5️⃣ Torre das Sombras. Cada torre dá uma habilidade nova que ajuda na próxima!</p>
             </div>
 
-
             <div class="dica-card">
                 <h3>💊 Economize Poções</h3>
                 <p>Não use poções de cura em inimigos comuns! Guarde-as para os chefes. Você pode recuperar vida descansando nas fontes mágicas espalhadas pelo mapa.</p>
             </div>
-
 
             <div class="dica-card">
                 <h3>👂 Fale com Todos</h3>
                 <p>Os moradores das vilas dão dicas importantes, revelam locais escondidos e até oferecem itens gratuitos. Fale com todos os NPCs antes de seguir adiante!</p>
             </div>
 
-
             <div class="dica-card">
                 <h3>📦 Itens Obrigatórios</h3>
                 <p>Em cada torre existe um item chave necessário para derrotar o chefe final daquela área. Sempre procure bem antes de enfrentar o chefe!</p>
             </div>
 
-
             <div class="dica-card">
                 <h3>🕹️ Controles e Atalhos</h3>
                 <p>Aprenda os atalhos: Tecla E = interagir, Q = usar item rápido, Shift = correr, Barra de Espaço = menu/pausa. Isso agiliza muito a jogabilidade!</p>
             </div>
-
 
             <div class="dica-card">
                 <h3>💾 Salve Sempre!</h3>
@@ -401,7 +440,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- Seção — Personagens -->
     <section class="container" id="personagens">
@@ -426,7 +464,6 @@
         </div>
     </section>
 
-
     <!-- Seção — Galeria -->
     <section class="container" id="galeria">
         <h2>🖼️ Galeria</h2>
@@ -440,7 +477,6 @@
             <div class="galeria-img">Cena de Encerramento</div>
         </div>
     </section>
-
 
     <!-- Seção — Requisitos do Sistema -->
     <section class="container" id="requisitos">
@@ -479,7 +515,6 @@
         </table>
     </section>
 
-
     <!-- Seção — Sobre / Contato -->
     <section class="container contato" id="contato">
         <h2>ℹ️ Sobre o Jogo</h2>
@@ -492,73 +527,71 @@
         <a href="#" class="btn"> Disponível — Em Breve!</a>
     </section>
 
-
     <!-- Rodapé -->
     <footer>
         <p>&copy; 2026 The Legend Of Aetheria — Guardian of Light. Todos os direitos reservados.</p>
         <p>Feito com 💜 por Hugo Raphael de Miranda</p>
         <p style="margin-top: 1rem; font-size: 0.9rem; color: #aaa;">
-            <a href="#">Política de Privacidade</a> | 
-            <a href="#">Termos de Uso</a> | 
-            <a href="#">Contato</a>
+            <a href="#privacidade">Política de Privacidade</a> | 
+            <a href="#termos">Termos de Uso</a> | 
+            <a href="#contato">Contato</a>
         </p>
-            <!-- Seção — Política de Privacidade -->
-    <section class="container" id="privacidade">
-        <h2>🔒 Política de Privacidade</h2>
-        <p><strong>The Legend Of Aetheria — Guardian of Light</strong> respeita a privacidade de todos os visitantes e usuários.</p>
-        <br>
-        <h3>📄 Coleta de Dados</h3>
-        <p>Este site não coleta, armazena ou compartilha dados pessoais dos visitantes sem consentimento explícito. Não usamos cookies de rastreamento.</p>
-        <br>
-        <h3>🔐 Segurança</h3>
-        <p>Todas as informações eventualmente fornecidas serão mantidas em segurança e nunca serão vendidas, trocadas ou transferidas para terceiros sem autorização.</p>
-        <br>
-        <h3>🎮 Uso do Jogo</h3>
-        <p>Ao jogar <strong>The Legend Of Aetheria</strong>, você concorda com os termos de uso. O jogo é gratuito e desenvolvido de forma independente.</p>
-    </section>
 
-    <!-- Seção — Termos de Uso -->
-    <section class="container" id="termos">
-        <h2>📝 Termos de Uso</h2>
-        <p>Ao acessar este site e utilizar o jogo, você concorda com os seguintes termos:</p>
-        <br>
-        <h3>© Propriedade Intelectual</h3>
-        <p>Todos os conteúdos, incluindo personagens, história, artes, músicas, código e design do jogo e do site são propriedade de <strong>Hugo Raphael de Miranda</strong>. É proibida a reprodução, distribuição ou modificação sem autorização prévia por escrito.</p>
-        <br>
-        <h3>🎮 Uso Permitido</h3>
-        <p>O jogo é disponibilizado para uso pessoal e não comercial. Você pode jogar, compartilhar capturas de tela e vídeos desde que dê os devidos créditos.</p>
-        <br>
-        <h3>⚠️ Responsabilidade</h3>
-        <p>O jogo é fornecido "como está", sem garantias explícitas. O desenvolvedor não se responsabiliza por danos ou problemas decorrentes do uso do software.</p>
-        <br>
-        <h3>🔄 Atualizações</h3>
-        <p>Estes termos podem ser atualizados a qualquer momento sem aviso prévio. Consulte esta página periodicamente.</p>
-    </section>
+        <!-- Seção — Política de Privacidade -->
+        <section class="container" id="privacidade">
+            <h2>🔒 Política de Privacidade</h2>
+            <p><strong>The Legend Of Aetheria — Guardian of Light</strong> respeita a privacidade de todos os visitantes e usuários.</p>
+            <br>
+            <h3>📄 Coleta de Dados</h3>
+            <p>Este site não coleta, armazena ou compartilha dados pessoais dos visitantes sem consentimento explícito. Não usamos cookies de rastreamento.</p>
+            <br>
+            <h3>🔐 Segurança</h3>
+            <p>Todas as informações eventualmente fornecidas serão mantidas em segurança e nunca serão vendidas, trocadas ou transferidas para terceiros sem autorização.</p>
+            <br>
+            <h3>🎮 Uso do Jogo</h3>
+            <p>Ao jogar <strong>The Legend Of Aetheria</strong>, você concorda com os termos de uso. O jogo é gratuito e desenvolvido de forma independente.</p>
+        </section>
 
-    <!-- Seção — Contato -->
-    <section class="container contato" id="contato">
-        <h2>✉️ Contato</h2>
-        <p>Tem dúvidas, sugestões, ou quer entrar em contato sobre o jogo?</p>
-        <br>
-        <p><strong>👨‍💻 Desenvolvedor:</strong> Hugo Raphael de Miranda</p>
-        <p><strong>🎮 Projeto:</strong> The Legend Of Aetheria — Guardian of Light</p>
-       <p><strong>📧 E-mail:</strong> 
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=studiosaetheria@gmail.com" 
-   style="color: #f9c74f; text-decoration: none;"
-   target="_blank">
-   studiosaetheria@gmail.com
-</a>
-        <p><strong>📍 Localização:</strong> Sabará — Minas Gerais, Brasil</p>
-        <br>
-        <p>Fique à vontade para enviar mensagens com sugestões, ideias, relatos de bugs ou apenas para dizer olá! 💜</p>
-        <p>Responderemos assim que possível!</p>
-    </section>
+        <!-- Seção — Termos de Uso -->
+        <section class="container" id="termos">
+            <h2>📝 Termos de Uso</h2>
+            <p>Ao acessar este site e utilizar o jogo, você concorda com os seguintes termos:</p>
+            <br>
+            <h3>© Propriedade Intelectual</h3>
+            <p>Todos os conteúdos, incluindo personagens, história, artes, músicas, código e design do jogo e do site são propriedade de <strong>Hugo Raphael de Miranda</strong>. É proibida a reprodução, distribuição ou modificação sem autorização prévia por escrito.</p>
+            <br>
+            <h3>🎮 Uso Permitido</h3>
+            <p>O jogo é disponibilizado para uso pessoal e não comercial. Você pode jogar, compartilhar capturas de tela e vídeos desde que dê os devidos créditos.</p>
+            <br>
+            <h3>⚠️ Responsabilidade</h3>
+            <p>O jogo é fornecido "como está", sem garantias explícitas. O desenvolvedor não se responsabiliza por danos ou problemas decorrentes do uso do software.</p>
+            <br>
+            <h3>🔄 Atualizações</h3>
+            <p>Estes termos podem ser atualizados a qualquer momento sem aviso prévio. Consulte esta página periodicamente.</p>
+        </section>
+
+        <!-- Seção — Contato -->
+        <section class="container contato" id="contato">
+            <h2>✉️ Contato</h2>
+            <p>Tem dúvidas, sugestões, ou quer entrar em contato sobre o jogo?</p>
+            <br>
+            <p><strong>👨‍💻 Desenvolvedor:</strong> Hugo Raphael de Miranda</p>
+            <p><strong>🎮 Projeto:</strong> The Legend Of Aetheria — Guardian of Light</p>
+            <p><strong>📧 E-mail:</strong> 
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=studiosaetheria@gmail.com" 
+               style="color: #f9c74f; text-decoration: none;"
+               target="_blank">
+                studiosaetheria@gmail.com
+            </a>
+            <p><strong>📍 Localização:</strong> Sabará — Minas Gerais, Brasil</p>
+            <br>
+            <p>Fique à vontade para enviar mensagens com sugestões, ideias, relatos de bugs ou apenas para dizer olá! 💜</p>
+            <p>Responderemos assim que possível!</p>
+        </section>
     </footer>
-
 
     <!-- Botão Voltar ao Topo -->
     <button id="btn-topo">↑</button>
-
 
     <!-- JavaScript para funcionalidades extras -->
     <script>
@@ -573,11 +606,9 @@
             }
         });
 
-
         btnTopo.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-
 
         // Scroll suave nos links de navegação
         document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -590,7 +621,6 @@
             });
         });
     </script>
-
 
 </body>
 </html>
