@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>The Legend Of Aetheria — Site Oficial</title>
-    <link rel="icon" type="image/x-icon" href="icone.ico">
-    <link rel="shortcut icon" type="image/x=icon" href="icone.ico">
+    <!-- ✅ Ícone do site → coloque o nome EXATO do seu arquivo de imagem -->
+    <link rel="icon" type="image/png" href="icone.png">
+    <link rel="shortcut icon" type="image/png" href="icone.png">
+    
     <style>
+        /* RESET E CONFIGURAÇÕES GERAIS */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         :root {
@@ -21,22 +24,33 @@
             --cor-texto: #eaeaea;
             --cor-fundo: #0f0f1a;
             --cor-card: #1e1e30;
+            --sombra-suave: 0 8px 30px rgba(0,0,0,0.4);
+            --sombra-destaque: 0 0 25px rgba(249, 199, 79, 0.35);
+            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
         }
 
         body {
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
-            line-height: 1.6;
+            line-height: 1.7;
+            font-family: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Cabeçalho e Navegação */
+        /* CABEÇALHO E NAVEGAÇÃO */
         header {
             background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
         }
 
         nav {
@@ -50,16 +64,22 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
+            font-size: 1.7rem;
+            font-weight: 700;
             color: var(--cor-destaque);
             text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: var(--transicao);
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 12px rgba(249, 199, 79, 0.5);
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 1.4rem;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -68,17 +88,19 @@
             color: var(--cor-texto);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
-            white-space: nowrap;
+            transition: var(--transicao);
+            padding: 0.4rem 0.2rem;
+            border-bottom: 2px solid transparent;
         }
 
         .nav-links a:hover {
             color: var(--cor-destaque);
+            border-bottom-color: var(--cor-destaque);
         }
 
-        /* Seção Hero — Destaque Principal */
+        /* SEÇÃO PRINCIPAL — HERO */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('fundo-lira.png') center top / cover no-repeat;
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url('fundo-lira.png') center top / cover no-repeat;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -88,199 +110,278 @@
             padding: 2rem;
             background-attachment: fixed;
             background-size: cover;
-            background-position: center center;
+            background-position: center top;
         }
 
         .hero h1 {
             font-size: 3.5rem;
             color: var(--cor-destaque);
-            margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(249, 199, 79, 0.5);
+            margin-bottom: 1.2rem;
+            text-shadow: 0 0 30px rgba(249, 199, 79, 0.5);
+            line-height: 1.2;
+            letter-spacing: 1px;
+            animation: brilho 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes brilho {
+            from { text-shadow: 0 0 20px rgba(249, 199, 79, 0.4); }
+            to   { text-shadow: 0 0 35px rgba(249, 199, 79, 0.7); }
         }
 
         .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin-bottom: 2rem;
+            font-size: 1.25rem;
+            max-width: 750px;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
         }
 
         .btn {
-            padding: 0.9rem 2rem;
-            background: var(--cor-destaque);
+            padding: 1rem 2.4rem;
+            background: linear-gradient(135deg, var(--cor-destaque), #e0b53f);
             color: #000;
             text-decoration: none;
-            font-weight: bold;
-            border-radius: 8px;
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: var(--transicao);
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.05rem;
             display: inline-block;
             text-align: center;
+            box-shadow: 0 4px 15px rgba(249, 199, 79, 0.3);
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(249, 199, 79, 0.4);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(249, 199, 79, 0.45);
         }
 
-        /* Container Geral */
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* CONTEÚDO GERAL */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
+        }
+
+        section {
+            margin-bottom: 2rem;
         }
 
         section h2 {
             font-size: 2rem;
             color: var(--cor-destaque);
-            margin-bottom: 2rem;
+            margin-bottom: 2.2rem;
             border-bottom: 2px solid var(--cor-destaque);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.6rem;
             display: inline-block;
+            position: relative;
         }
 
-        /* Seção — História */
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cor-destaque), transparent);
+        }
+
         .historia p {
-            margin-bottom: 1.2rem;
-            font-size: 1.1rem;
+            margin-bottom: 1.4rem;
+            font-size: 1.08rem;
+            text-align: justify;
         }
 
-        /* Seção — Dicas */
-        .dicas-grid {
+        /* GRIDS E CARDS */
+        .dicas-grid,
+        .personagens-grid,
+        .galeria-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            gap: 1.6rem;
             margin-top: 2rem;
         }
 
-        .dica-card {
-            background: var(--cor-card);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--cor-destaque);
-            transition: transform 0.3s;
+        .dicas-grid {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         }
 
-        .dica-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .dica-card h3 {
-            color: var(--cor-destaque);
-            margin-bottom: 0.8rem;
-        }
-
-        /* Seção — Personagens */
         .personagens-grid {
-            display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+        }
+
+        .galeria-grid {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .dica-card,
+        .personagem-card,
+        .galeria-img {
+            background: var(--cor-card);
+            padding: 1.6rem;
+            border-radius: 14px;
+            transition: var(--transicao);
+            border: 1px solid rgba(249, 199, 79, 0.08);
+        }
+
+        .dica-card {
+            border-left: 4px solid var(--cor-destaque);
+        }
+
+        .dica-card:hover,
+        .personagem-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--sombra-suave);
+            border-color: rgba(249, 199, 79, 0.25);
+        }
+
+        .dica-card h3,
+        .personagem-card h3 {
+            color: var(--cor-destaque);
+            margin-bottom: 0.9rem;
+            font-size: 1.15rem;
         }
 
         .personagem-card {
-            background: var(--cor-card);
-            padding: 1.5rem;
-            border-radius: 12px;
             text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .personagem-card:hover {
-            transform: scale(1.05);
         }
 
         .personagem-card h3 {
-            color: var(--cor-destaque);
-            margin: 1rem 0 0.5rem;
-        }
-
-        /* Seção — Galeria */
-        .galeria-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            margin: 1rem 0 0.6rem;
         }
 
         .galeria-img {
-            background: var(--cor-card);
             height: 180px;
-            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--cor-destaque);
-            font-size: 1.2rem;
-            border: 2px dashed var(--cor-destaque);
+            font-size: 1.15rem;
+            border: 2px dashed rgba(249, 199, 79, 0.35);
+            background: linear-gradient(135deg, var(--cor-card), #252540);
         }
 
-        /* Seção — Requisitos */
+        /* TABELA DE REQUISITOS */
         .req-table {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        .req-table th, .req-table td {
-            padding: 1rem;
+        .req-table th,
+        .req-table td {
+            padding: 1.1rem;
             text-align: left;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid #2a2a40;
         }
 
         .req-table th {
             color: var(--cor-destaque);
-            background: var(--cor-card);
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            font-weight: 600;
         }
 
-        /* Seção — Contato */
+        .req-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .req-table tr:hover td {
+            background: rgba(249, 199, 79, 0.04);
+        }
+
+        /* SEÇÃO CONTATO */
         .contato {
             text-align: center;
         }
 
-        /* Rodapé */
+        .contato p a {
+            color: var(--cor-destaque);
+            text-decoration: none;
+            transition: var(--transicao);
+        }
+
+        .contato p a:hover {
+            text-decoration: underline;
+        }
+
+        /* RODAPÉ */
         footer {
-            background: var(--cor-primaria);
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
             text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(249, 199, 79, 0.1);
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
         }
 
         footer a {
             color: var(--cor-destaque);
             text-decoration: none;
+            transition: var(--transicao);
         }
 
-        /* Botão voltar ao topo */
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* BOTÃO VOLTAR AO TOPO */
         #btn-topo {
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: var(--cor-destaque);
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, var(--cor-destaque), #e0b53f);
             color: #000;
             border: none;
             border-radius: 50%;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             cursor: pointer;
             display: none;
             z-index: 99;
+            box-shadow: 0 4px 15px rgba(249, 199, 79, 0.4);
+            transition: var(--transicao);
         }
 
-        /* ✅ RESPONSIVIDADE COMPLETA PARA CELULARES */
+        #btn-topo:hover {
+            transform: translateY(-3px);
+        }
+
+        /* ✅ RESPONSIVIDADE PERFEITA — CELULARES E TABLETS */
         @media (max-width: 768px) {
+            html {
+                scroll-padding-top: 100px;
+            }
+
             header {
                 padding: 1rem;
             }
 
             .logo {
                 font-size: 1.4rem;
-                text-align: center;
                 width: 100%;
+                text-align: center;
             }
 
             .nav-links {
-                gap: 0.7rem;
+                gap: 0.8rem 1rem;
                 width: 100%;
                 margin-top: 0.5rem;
             }
@@ -292,14 +393,12 @@
             .hero {
                 background-attachment: scroll;
                 background-position: center top;
-                background-size: cover;
                 padding: 1.5rem;
                 min-height: 100vh;
             }
 
             .hero h1 {
-                font-size: 2rem;
-                line-height: 1.2;
+                font-size: 2.1rem;
             }
 
             .hero p {
@@ -307,22 +406,23 @@
             }
 
             .btn {
-                padding: 0.8rem 1.5rem;
-                font-size: 0.95rem;
+                padding: 0.9rem 1.8rem;
+                font-size: 1rem;
                 width: 100%;
-                max-width: 300px;
+                max-width: 320px;
             }
 
             .container {
-                padding: 2rem 1rem;
+                padding: 2.5rem 1.2rem;
             }
 
             section h2 {
-                font-size: 1.5rem;
+                font-size: 1.55rem;
             }
 
             .historia p {
                 font-size: 1rem;
+                text-align: left;
             }
 
             .dicas-grid,
@@ -333,27 +433,27 @@
 
             .req-table th,
             .req-table td {
-                padding: 0.7rem;
+                padding: 0.8rem;
                 font-size: 0.9rem;
             }
 
             footer {
-                padding: 1.5rem 1rem;
-                font-size: 0.9rem;
+                padding: 2rem 1.2rem;
+                font-size: 0.95rem;
             }
         }
 
         @media (max-width: 480px) {
             .hero h1 {
-                font-size: 1.6rem;
+                font-size: 1.75rem;
             }
 
             .nav-links {
-                gap: 0.5rem;
+                gap: 0.6rem;
             }
 
             .nav-links a {
-                font-size: 0.85rem;
+                font-size: 0.88rem;
             }
         }
     </style>
@@ -363,7 +463,7 @@
     <!-- Cabeçalho / Navegação -->
     <header>
         <nav>
-            <a href="#" class="logo">⚔️ The Legend Of Aetheria</a>
+            <a href="#inicio" class="logo">⚔️ The Legend Of Aetheria</a>
             <ul class="nav-links">
                 <li><a href="#inicio">Início</a></li>
                 <li><a href="#historia">História</a></li>
@@ -403,37 +503,30 @@
                 <h3>🗺️ Explore Tudo</h3>
                 <p>Não siga apenas a história principal! Existem cavernas escondidas, baús secretos e personagens com missões secundárias em cada canto do mapa. Muitos itens raros só aparecem em áreas opcionais.</p>
             </div>
-
             <div class="dica-card">
                 <h3>⚔️ Melhore suas Armas</h3>
                 <p>Guarde os cristais que encontra pelo caminho — eles servem para evoluir sua espada e arco na Vila dos Ferreiros. Uma arma melhor torna os chefes muito mais fáceis!</p>
             </div>
-
             <div class="dica-card">
                 <h3>🏰 Ordem das Torres</h3>
                 <p>Recomendado: 1️⃣ Torre da Floresta → 2️⃣ Torre do Vento → 3️⃣ Torre do Trovão → 4️⃣ Torre da Água → 5️⃣ Torre das Sombras. Cada torre dá uma habilidade nova que ajuda na próxima!</p>
             </div>
-
             <div class="dica-card">
                 <h3>💊 Economize Poções</h3>
                 <p>Não use poções de cura em inimigos comuns! Guarde-as para os chefes. Você pode recuperar vida descansando nas fontes mágicas espalhadas pelo mapa.</p>
             </div>
-
             <div class="dica-card">
                 <h3>👂 Fale com Todos</h3>
                 <p>Os moradores das vilas dão dicas importantes, revelam locais escondidos e até oferecem itens gratuitos. Fale com todos os NPCs antes de seguir adiante!</p>
             </div>
-
             <div class="dica-card">
                 <h3>📦 Itens Obrigatórios</h3>
                 <p>Em cada torre existe um item chave necessário para derrotar o chefe final daquela área. Sempre procure bem antes de enfrentar o chefe!</p>
             </div>
-
             <div class="dica-card">
                 <h3>🕹️ Controles e Atalhos</h3>
                 <p>Aprenda os atalhos: Tecla E = interagir, Q = usar item rápido, Shift = correr, Barra de Espaço = menu/pausa. Isso agiliza muito a jogabilidade!</p>
             </div>
-
             <div class="dica-card">
                 <h3>💾 Salve Sempre!</h3>
                 <p>O jogo tem 3 slots de salvamento. Salve antes de entrar em cada área nova e antes de cada chefe. Assim você nunca perde seu progresso!</p>
@@ -524,7 +617,7 @@
         <strong>🛠️ Motor Gráfico:</strong> Raylib (C++)<br>
         <strong>📅 Versão:</strong> 1.0 — Lançamento previsto em breve</p>
         <br>
-        <a href="#" class="btn"> Disponível — Em Breve!</a>
+        <a href="#" class="btn">Disponível — Em Breve!</a>
     </section>
 
     <!-- Rodapé -->
@@ -583,6 +676,7 @@
                target="_blank">
                 studiosaetheria@gmail.com
             </a>
+            </p>
             <p><strong>📍 Localização:</strong> Sabará — Minas Gerais, Brasil</p>
             <br>
             <p>Fique à vontade para enviar mensagens com sugestões, ideias, relatos de bugs ou apenas para dizer olá! 💜</p>
@@ -591,33 +685,25 @@
     </footer>
 
     <!-- Botão Voltar ao Topo -->
-    <button id="btn-topo">↑</button>
+    <button id="btn-topo" aria-label="Voltar ao topo">↑</button>
 
-    <!-- JavaScript para funcionalidades extras -->
+    <!-- JavaScript -->
     <script>
         // Botão voltar ao topo
         const btnTopo = document.getElementById('btn-topo');
-        
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                btnTopo.style.display = 'block';
-            } else {
-                btnTopo.style.display = 'none';
-            }
+            btnTopo.style.display = window.scrollY > 300 ? 'block' : 'none';
         });
-
         btnTopo.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Scroll suave nos links de navegação
+        // Scroll suave nos links
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const alvo = document.querySelector(this.getAttribute('href'));
-                if (alvo) {
-                    alvo.scrollIntoView({ behavior: 'smooth' });
-                }
+                if (alvo) alvo.scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
