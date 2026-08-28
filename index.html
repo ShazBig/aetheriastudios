@@ -34,19 +34,16 @@
             --fonte-padrao: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
             --tamanho-fonte: 16px;
         }
-
         *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 80px;
             font-size: var(--tamanho-fonte);
         }
-
         body {
             background-color: var(--cor-fundo);
             color: var(--cor-texto);
@@ -56,12 +53,10 @@
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
         }
-
         ul { list-style: none; }
         a { text-decoration: none; color: inherit; }
         img { max-width: 100%; height: auto; display: block; }
         button { font-family: inherit; }
-
         /* ✅ BARRA DE ACESSIBILIDADE — BOTÕES APARECEM SÓ AO PASSAR/CLICAR */
         .acessibilidade-barra {
             position: fixed;
@@ -77,14 +72,12 @@
             flex-wrap: wrap;
             border-bottom: 2px solid var(--cor-destaque);
         }
-
         .grupo-audio {
             display: flex;
             gap: 0.6rem;
             align-items: center;
             position: relative;
         }
-
         .botoes-audio-extras {
             display: flex;
             gap: 0.6rem;
@@ -93,7 +86,6 @@
             transform: translateX(-10px);
             transition: all 0.3s ease;
         }
-
         /* ✅ APARECE ao passar o mouse OU quando estiver ativo/clicado */
         .grupo-audio:hover .botoes-audio-extras,
         .grupo-audio.ativo .botoes-audio-extras {
@@ -101,7 +93,6 @@
             visibility: visible;
             transform: translateX(0);
         }
-
         .btn-acessibilidade {
             background: var(--cor-destaque);
             color: #000;
@@ -114,14 +105,12 @@
             transition: var(--transicao);
             white-space: nowrap;
         }
-
         .btn-acessibilidade:hover,
         .btn-acessibilidade:focus {
             background: var(--cor-destaque-escuro);
             outline: 3px solid #fff;
             outline-offset: 2px;
         }
-
         .pular-conteudo {
             position: absolute;
             top: -50px;
@@ -133,11 +122,9 @@
             font-weight: bold;
             border-radius: 6px;
         }
-
         .pular-conteudo:focus {
             top: 10px;
         }
-
         header {
             background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
             padding: 1rem 2rem;
@@ -150,7 +137,6 @@
             -webkit-backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(249, 199, 79, 0.08);
         }
-
         nav {
             display: flex;
             justify-content: space-between;
@@ -160,7 +146,6 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
-
         .logo {
             font-size: 1.7rem;
             font-weight: 700;
@@ -169,13 +154,11 @@
             transition: var(--transicao);
             position: relative;
         }
-
         .logo:hover, .logo:focus {
             text-shadow: 0 0 12px rgba(249, 199, 79, 0.5);
             outline: 2px solid var(--cor-destaque);
             outline-offset: 4px;
         }
-
         .nav-links {
             display: flex;
             list-style: none;
@@ -183,7 +166,6 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-
         .nav-links a {
             color: var(--cor-texto);
             text-decoration: none;
@@ -193,7 +175,6 @@
             border-bottom: 3px solid transparent;
             position: relative;
         }
-
         .nav-links a:hover,
         .nav-links a:focus {
             color: var(--cor-destaque);
@@ -202,7 +183,6 @@
             outline-offset: 2px;
             border-radius: 4px;
         }
-
         .hero {
             background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), url('fundo-lira.png') center top / cover no-repeat;
             min-height: 100vh;
@@ -217,7 +197,6 @@
             background-position: center top;
             position: relative;
         }
-
         .hero::before {
             content: '';
             position: absolute;
@@ -225,9 +204,7 @@
             background: radial-gradient(circle at center, transparent 30%, rgba(15,15,26,0.5) 100%);
             pointer-events: none;
         }
-
         .hero > * { position: relative; z-index: 1; }
-
         .hero h1 {
             font-size: 3.5rem;
             color: var(--cor-destaque);
@@ -237,19 +214,16 @@
             letter-spacing: 1px;
             animation: brilho 3s ease-in-out infinite alternate;
         }
-
         @keyframes brilho {
             from { text-shadow: 0 0 20px rgba(249, 199, 79, 0.4); }
             to   { text-shadow: 0 0 35px rgba(249, 199, 79, 0.8); }
         }
-
         .hero p {
             font-size: 1.25rem;
             max-width: 750px;
             margin-bottom: 2.5rem;
             line-height: 1.8;
         }
-
         .btn {
             padding: 1rem 2.4rem;
             background: linear-gradient(135deg, var(--cor-destaque), var(--cor-destaque-escuro));
@@ -267,7 +241,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .btn:hover,
         .btn:focus {
             transform: translateY(-4px) scale(1.02);
@@ -275,21 +248,17 @@
             outline: 3px solid #fff;
             outline-offset: 3px;
         }
-
         .btn:active {
             transform: translateY(-1px);
         }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 4rem 2rem;
         }
-
         section {
             margin-bottom: 2rem;
         }
-
         section h2 {
             font-size: 2rem;
             color: var(--cor-destaque);
@@ -299,7 +268,6 @@
             display: inline-block;
             position: relative;
         }
-
         section h2::after {
             content: '';
             position: absolute;
@@ -309,14 +277,12 @@
             height: 3px;
             background: linear-gradient(90deg, var(--cor-destaque), transparent);
         }
-
         .historia p {
             margin-bottom: 1.4rem;
             font-size: 1.08rem;
             text-align: justify;
             hyphens: auto;
         }
-
         .dicas-grid,
         .personagens-grid,
         .galeria-grid {
@@ -324,19 +290,15 @@
             gap: 1.6rem;
             margin-top: 2rem;
         }
-
         .dicas-grid {
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
         }
-
         .personagens-grid {
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
-
         .galeria-grid {
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         }
-
         .dica-card,
         .personagem-card,
         .galeria-img {
@@ -347,11 +309,9 @@
             border: 2px solid rgba(249, 199, 79, 0.15);
             will-change: transform, box-shadow;
         }
-
         .dica-card {
             border-left: 5px solid var(--cor-destaque);
         }
-
         .dica-card:hover,
         .dica-card:focus-within,
         .personagem-card:hover,
@@ -362,22 +322,18 @@
             outline: 2px solid var(--cor-destaque);
             outline-offset: 2px;
         }
-
         .dica-card h3,
         .personagem-card h3 {
             color: var(--cor-destaque);
             margin-bottom: 0.9rem;
             font-size: 1.15rem;
         }
-
         .personagem-card {
             text-align: center;
         }
-
         .personagem-card h3 {
             margin: 1rem 0 0.6rem;
         }
-
         .galeria-img {
             height: 180px;
             display: flex;
@@ -390,7 +346,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .galeria-img:hover,
         .galeria-img:focus {
             border-color: var(--cor-destaque);
@@ -398,7 +353,6 @@
             outline: 2px solid var(--cor-destaque);
             outline-offset: 2px;
         }
-
         .req-table {
             width: 100%;
             border-collapse: separate;
@@ -408,7 +362,6 @@
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
         .req-table th,
         .req-table td {
             padding: 1.1rem;
@@ -416,33 +369,27 @@
             border-bottom: 2px solid #2a2a40;
             transition: background-color 0.2s ease;
         }
-
         .req-table th {
             color: #000;
             background: var(--cor-destaque);
             font-weight: 700;
         }
-
         .req-table tr:last-child td {
             border-bottom: none;
         }
-
         .req-table tr:hover td,
         .req-table tr:focus-within td {
             background: rgba(249, 199, 79, 0.08);
         }
-
         .contato {
             text-align: center;
         }
-
         .contato p a {
             color: var(--cor-destaque);
             text-decoration: underline;
             text-underline-offset: 3px;
             transition: var(--transicao);
         }
-
         .contato p a:hover,
         .contato p a:focus {
             background: var(--cor-destaque);
@@ -452,7 +399,6 @@
             outline: 3px solid #fff;
             outline-offset: 2px;
         }
-
         footer {
             background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
             text-align: center;
@@ -460,18 +406,15 @@
             margin-top: 4rem;
             border-top: 2px solid rgba(249, 199, 79, 0.15);
         }
-
         footer > p {
             margin-bottom: 0.5rem;
         }
-
         footer a {
             color: var(--cor-destaque);
             text-decoration: underline;
             text-underline-offset: 3px;
             transition: var(--transicao);
         }
-
         footer a:hover,
         footer a:focus {
             background: var(--cor-destaque);
@@ -481,13 +424,11 @@
             outline: 3px solid #fff;
             outline-offset: 2px;
         }
-
         footer section {
             margin-top: 3rem;
             padding-top: 2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-
         #btn-topo {
             position: fixed;
             bottom: 2rem;
@@ -506,117 +447,95 @@
             transition: var(--transicao);
             will-change: transform;
         }
-
         #btn-topo:hover,
         #btn-topo:focus {
             transform: translateY(-3px);
             outline: 3px solid #fff;
             outline-offset: 2px;
         }
-
         @media (max-width: 768px) {
             html {
                 scroll-padding-top: 100px;
             }
-
             header {
                 padding: 1rem;
                 padding-top: 4.5rem;
             }
-
             .logo {
                 font-size: 1.4rem;
                 width: 100%;
                 text-align: center;
             }
-
             .nav-links {
                 gap: 0.8rem 1rem;
                 width: 100%;
                 margin-top: 0.5rem;
             }
-
             .nav-links a {
                 font-size: 0.95rem;
             }
-
             .hero {
                 background-attachment: scroll;
                 background-position: center top;
                 padding: 1.5rem;
                 min-height: 100vh;
             }
-
             .hero h1 {
                 font-size: 2.1rem;
             }
-
             .hero p {
                 font-size: 1rem;
             }
-
             .btn {
                 padding: 0.9rem 1.8rem;
                 font-size: 1rem;
                 width: 100%;
                 max-width: 320px;
             }
-
             .container {
                 padding: 2.5rem 1.2rem;
             }
-
             section h2 {
                 font-size: 1.55rem;
             }
-
             .historia p {
                 font-size: 1rem;
                 text-align: left;
             }
-
             .dicas-grid,
             .personagens-grid,
             .galeria-grid {
                 grid-template-columns: 1fr;
             }
-
             .req-table th,
             .req-table td {
                 padding: 0.8rem;
                 font-size: 0.9rem;
             }
-
             footer {
                 padding: 2rem 1.2rem;
                 font-size: 0.95rem;
             }
-
             .acessibilidade-barra {
                 gap: 0.4rem;
                 padding: 0.4rem 0.5rem;
             }
-
             .btn-acessibilidade {
                 padding: 0.4rem 0.6rem;
                 font-size: 0.8rem;
             }
         }
-
         @media (max-width: 480px) {
             .hero h1 {
                 font-size: 1.75rem;
             }
-
             .nav-links {
                 gap: 0.6rem;
             }
-
             .nav-links a {
                 font-size: 0.88rem;
             }
         }
-
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
@@ -627,9 +546,7 @@
     </style>
 </head>
 <body>
-
     <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
-
     <!-- ✅ BOTÕES APARECEM SÓ AO PASSAR/CLICAR EM OUVIR TEXTO -->
     <div class="acessibilidade-barra" role="toolbar" aria-label="Ferramentas de Acessibilidade">
         <div class="grupo-audio" id="grupo-audio">
@@ -643,7 +560,6 @@
         <button class="btn-acessibilidade" id="btn-diminuir" title="Diminuir tamanho da letra">A- Fonte</button>
         <button class="btn-acessibilidade" id="btn-alto-contraste" title="Modo alto contraste">👁️ Contraste</button>
     </div>
-
     <header role="banner">
         <nav role="navigation" aria-label="Navegação Principal">
             <a href="#inicio" class="logo" aria-label="Página Inicial — The Legend Of Aetheria">⚔️ The Legend Of Aetheria</a>
@@ -658,14 +574,12 @@
             </ul>
         </nav>
     </header>
-
     <main id="conteudo-principal">
     <section class="hero" id="inicio" aria-labelledby="titulo-inicio">
         <h1 id="titulo-inicio">The Legend Of Aetheria<br>Guardian of Light</h1>
         <p role="text">Uma aventura épica em um mundo de fantasia. Desvende segredos, derrote inimigos e torne-se a guardiã da luz.</p>
         <a href="#historia" class="btn" role="button" aria-label="Começar a aventura — ir para a história do jogo">Começar Aventura</a>
     </section>
-
     <section class="container historia" id="historia" aria-labelledby="titulo-historia">
         <h2 id="titulo-historia">📖 A História do Jogo</h2>
         <p>Há milênios, o reino de Aetheria foi protegido pela Luz Sagrada, uma força mágica que mantinha a paz e a harmonia entre todos os povos. Mas um dia, a Escuridão Eterna despertou das profundezas da terra e espalhou sua sombra sobre o mundo, corrompendo a natureza e aprisionando os Espíritos da Luz.</p>
@@ -674,7 +588,6 @@
         
         <p>Sua jornada não será fácil. Criaturas corrompidas, quebra-cabeças antigos e segredos esquecidos esperam por você. Mas lembre-se: a coragem não é a ausência do medo, mas sim a vontade de seguir em frente apesar dele. Reúna aliados, encontre relíquias lendárias e prove que você é a verdadeira Guardiã da Luz!</p>
     </section>
-
     <section class="container" id="dicas" aria-labelledby="titulo-dicas">
         <h2 id="titulo-dicas">💡 Dicas para Zerar o Jogo</h2>
         <p>Confira as melhores dicas para completar 100% do jogo e não perder nenhum segredo!</p>
@@ -714,7 +627,6 @@
             </div>
         </div>
     </section>
-
     <section class="container" id="personagens" aria-labelledby="titulo-personagens">
         <h2 id="titulo-personagens">👥 Personagens Principais</h2>
         <div class="personagens-grid" role="list" aria-label="Lista de personagens">
@@ -752,7 +664,6 @@
             </div>
         </div>
     </section>
-
     <section class="container" id="galeria" aria-labelledby="titulo-galeria">
         <h2 id="titulo-galeria">🖼️ Galeria (Futuras imagens serão colocadas aqui)</h2>
         <p>Imagens e artes do jogo</p>
@@ -765,7 +676,6 @@
             <div class="galeria-img" role="listitem" tabindex="0" aria-label="Imagem: Cena de Encerramento">Cena de Encerramento</div>
         </div>
     </section>
-
     <section class="container" id="requisitos" aria-labelledby="titulo-requisitos">
         <h2 id="titulo-requisitos">💻 Requisitos do Sistema</h2>
         <table class="req-table" aria-label="Requisitos do sistema">
@@ -805,7 +715,6 @@
             </tbody>
         </table>
     </section>
-
     <section class="container contato" id="contato" aria-labelledby="titulo-sobre">
         <h2 id="titulo-sobre">ℹ️ Sobre o Jogo</h2>
         <p><strong>The Legend Of Aetheria — Guardian of Light</strong> é um jogo de aventura, história e ação 2D desenvolvido por Studios Aetheria. Inspirado nos clássicos de RPG com exploração, combates e uma história envolvente!</p>
@@ -817,7 +726,6 @@
         <a href="#" class="btn" aria-disabled="true" role="button">Em Desenvolvimento!</a>
     </section>
     </main>
-
     <footer role="contentinfo">
         <p>&copy; 2026 The Legend Of Aetheria — Guardian of Light. Todos os direitos reservados.</p>
         <p>Desenvolvido por: Studios Aetheria</p>
@@ -826,7 +734,6 @@
             <a href="#termos">Termos de Uso</a> | 
             <a href="#contato-pagina">Contato</a>
         </p>
-
         <section class="container" id="privacidade" aria-labelledby="titulo-privacidade">
             <h2 id="titulo-privacidade">🔒 Política de Privacidade</h2>
             <p><strong>The Legend Of Aetheria — Guardian of Light</strong> respeita a privacidade de todos os visitantes e usuários.</p>
@@ -840,7 +747,6 @@
             <h3>🎮 Uso do Jogo</h3>
             <p>Ao jogar <strong>The Legend Of Aetheria</strong>, você concorda com os termos de uso. O jogo é gratuito e desenvolvido de forma independente.</p>
         </section>
-
         <section class="container" id="termos" aria-labelledby="titulo-termos">
             <h2 id="titulo-termos">📝 Termos de Uso</h2>
             <p>Ao acessar este site e utilizar o jogo, você concorda com os seguintes termos:</p>
@@ -857,7 +763,6 @@
             <h3>🔄 Atualizações</h3>
             <p>Estes termos podem ser atualizados a qualquer momento sem aviso prévio. Consulte esta página periodicamente.</p>
         </section>
-
         <section class="container" id="contato-pagina" aria-labelledby="titulo-contato">
             <h2 id="titulo-contato">✉️ Contato</h2>
             <p>Tem dúvidas, sugestões, ou quer entrar em contato sobre o jogo?</p>
@@ -865,11 +770,11 @@
             <p><strong>👨‍💻 Desenvolvedor:</strong> Hugo Raphael de Miranda</p>
             <p><strong>🎮 Projeto:</strong> The Legend Of Aetheria — Guardian of Light</p>
             <p><strong>📧 E-mail:</strong> 
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=studiosaetheria@gmail.com" 
-               target="_blank" rel="noopener noreferrer"
-               aria-label="Enviar e-mail para studiosaetheria@gmail.com">
-                studiosaetheria@gmail.com
-            </a>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=studiosaetheria@gmail.com" 
+                   target="_blank" rel="noopener noreferrer"
+                   aria-label="Enviar e-mail para studiosaetheria@gmail.com">
+                    studiosaetheria@gmail.com
+                </a>
             </p>
             <p><strong>📍 Localização:</strong> Sabará — Minas Gerais, Brasil</p>
             <br>
@@ -877,9 +782,7 @@
             <p>Responderemos assim que possível!</p>
         </section>
     </footer>
-
     <button id="btn-topo" aria-label="Voltar ao topo da página">↑</button>
-
     <!-- ✅ FUNCIONA NO PC E NO CELULAR — BOTÕES APARECEM SÓ AO CLICAR/PASSAR -->
     <script>
         const sinteseVoz = window.speechSynthesis;
@@ -887,19 +790,20 @@
         const grupoAudio = document.getElementById('grupo-audio');
         let menuAberto = false;
 
-        // Libera voz no celular
+        // ✅ LIBERA A VOZ NO CELULAR — UMA SÓ VEZ
         function liberarVozNoCelular() {
             if (!jaTocouTela) {
                 jaTocouTela = true;
                 const teste = new SpeechSynthesisUtterance("");
                 teste.volume = 0;
+                teste.lang = 'pt-BR';
                 sinteseVoz.speak(teste);
                 sinteseVoz.cancel();
             }
         }
-
-        document.addEventListener('click', liberarVozNoCelular);
-        document.addEventListener('touchstart', liberarVozNoCelular);
+        // Libera com o PRIMEIRO toque/clique em QUALQUER lugar
+        document.addEventListener('click', liberarVozNoCelular, { once: true });
+        document.addEventListener('touchstart', liberarVozNoCelular, { once: true });
 
         // ✅ No celular: clique em Ouvir Texto mostra/esconde os botões extras
         document.getElementById('btn-ler').addEventListener('click', (e) => {
@@ -912,7 +816,7 @@
             }
         });
 
-        // Fecha o menu se clicar fora dele
+        // Fecha o menu se clicar FORA dele
         document.addEventListener('click', (e) => {
             if (!grupoAudio.contains(e.target)) {
                 grupoAudio.classList.remove('ativo');
@@ -920,7 +824,7 @@
             }
         });
 
-        // 🔊 OUVIR TEXTO
+        // 🔊 OUVIR TEXTO — AGORA LIBERADO ANTES DE FALAR!
         document.getElementById('btn-ler').addEventListener('click', () => {
             sinteseVoz.cancel();
             const conteudo = document.getElementById('conteudo-principal').innerText;
