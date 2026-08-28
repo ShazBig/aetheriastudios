@@ -62,6 +62,7 @@
         img { max-width: 100%; height: auto; display: block; }
         button { font-family: inherit; }
 
+        /* ✅ BARRA DE ACESSIBILIDADE — BOTÕES APARECEM SÓ AO PASSAR/CLICAR */
         .acessibilidade-barra {
             position: fixed;
             top: 0;
@@ -77,6 +78,30 @@
             border-bottom: 2px solid var(--cor-destaque);
         }
 
+        .grupo-audio {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .botoes-audio-extras {
+            display: flex;
+            gap: 0.6rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        /* ✅ APARECE ao passar o mouse OU quando estiver ativo/clicado */
+        .grupo-audio:hover .botoes-audio-extras,
+        .grupo-audio.ativo .botoes-audio-extras {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
         .btn-acessibilidade {
             background: var(--cor-destaque);
             color: #000;
@@ -87,6 +112,7 @@
             cursor: pointer;
             font-size: 0.9rem;
             transition: var(--transicao);
+            white-space: nowrap;
         }
 
         .btn-acessibilidade:hover,
@@ -604,11 +630,15 @@
 
     <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
 
-    <!-- ✅ BARRA COM BOTÃO PARAR ADICIONADO -->
+    <!-- ✅ BOTÕES APARECEM SÓ AO PASSAR/CLICAR EM OUVIR TEXTO -->
     <div class="acessibilidade-barra" role="toolbar" aria-label="Ferramentas de Acessibilidade">
-        <button class="btn-acessibilidade" id="btn-ler" aria-pressed="false" title="Ler texto em voz">🔊 Ouvir Texto</button>
-        <button class="btn-acessibilidade" id="btn-pausar" title="Pausar leitura">⏸️ Pausar/Despausar</button>
-        <button class="btn-acessibilidade" id="btn-parar" title="Parar de ler">❌ Parar</button>
+        <div class="grupo-audio" id="grupo-audio">
+            <button class="btn-acessibilidade" id="btn-ler" aria-pressed="false" title="Ler texto em voz">🔊 Ouvir Texto</button>
+            <div class="botoes-audio-extras">
+                <button class="btn-acessibilidade" id="btn-pausar" title="Pausar/Despausar leitura">⏸️ Pausar/Despausar</button>
+                <button class="btn-acessibilidade" id="btn-parar" title="Parar de ler">❌ Parar</button>
+            </div>
+        </div>
         <button class="btn-acessibilidade" id="btn-aumentar" title="Aumentar tamanho da letra">A+ Fonte</button>
         <button class="btn-acessibilidade" id="btn-diminuir" title="Diminuir tamanho da letra">A- Fonte</button>
         <button class="btn-acessibilidade" id="btn-alto-contraste" title="Modo alto contraste">👁️ Contraste</button>
@@ -850,10 +880,47 @@
 
     <button id="btn-topo" aria-label="Voltar ao topo da página">↑</button>
 
-    <!-- ✅ JAVASCRIPT COM BOTÃO PARAR FUNCIONANDO -->
+    <!-- ✅ FUNCIONA NO PC E NO CELULAR — BOTÕES APARECEM SÓ AO CLICAR/PASSAR -->
     <script>
         const sinteseVoz = window.speechSynthesis;
+        let jaTocouTela = false;
+        const grupoAudio = document.getElementById('grupo-audio');
+        let menuAberto = false;
 
+        // Libera voz no celular
+        function liberarVozNoCelular() {
+            if (!jaTocouTela) {
+                jaTocouTela = true;
+                const teste = new SpeechSynthesisUtterance("");
+                teste.volume = 0;
+                sinteseVoz.speak(teste);
+                sinteseVoz.cancel();
+            }
+        }
+
+        document.addEventListener('click', liberarVozNoCelular);
+        document.addEventListener('touchstart', liberarVozNoCelular);
+
+        // ✅ No celular: clique em Ouvir Texto mostra/esconde os botões extras
+        document.getElementById('btn-ler').addEventListener('click', (e) => {
+            e.stopPropagation();
+            menuAberto = !menuAberto;
+            if (menuAberto) {
+                grupoAudio.classList.add('ativo');
+            } else {
+                grupoAudio.classList.remove('ativo');
+            }
+        });
+
+        // Fecha o menu se clicar fora dele
+        document.addEventListener('click', (e) => {
+            if (!grupoAudio.contains(e.target)) {
+                grupoAudio.classList.remove('ativo');
+                menuAberto = false;
+            }
+        });
+
+        // 🔊 OUVIR TEXTO
         document.getElementById('btn-ler').addEventListener('click', () => {
             sinteseVoz.cancel();
             const conteudo = document.getElementById('conteudo-principal').innerText;
@@ -865,6 +932,7 @@
             sinteseVoz.speak(fala);
         });
 
+        // ⏸️ PAUSAR/DESPAUSAR
         document.getElementById('btn-pausar').addEventListener('click', () => {
             if (sinteseVoz.speaking) {
                 if (sinteseVoz.paused) {
@@ -875,10 +943,14 @@
             }
         });
 
+        // ❌ PARAR
         document.getElementById('btn-parar').addEventListener('click', () => {
             sinteseVoz.cancel();
+            grupoAudio.classList.remove('ativo');
+            menuAberto = false;
         });
 
+        // A+ FONTE
         let tamanhoFonte = 16;
         document.getElementById('btn-aumentar').addEventListener('click', () => {
             if (tamanhoFonte < 28) {
@@ -887,6 +959,7 @@
             }
         });
 
+        // A- FONTE
         document.getElementById('btn-diminuir').addEventListener('click', () => {
             if (tamanhoFonte > 12) {
                 tamanhoFonte -= 2;
@@ -894,6 +967,7 @@
             }
         });
 
+        // 👁️ ALTO CONTRASTE
         let altoContraste = false;
         document.getElementById('btn-alto-contraste').addEventListener('click', () => {
             altoContraste = !altoContraste;
@@ -913,6 +987,7 @@
             }
         });
 
+        // ⬆️ VOLTAR AO TOPO
         const btnTopo = document.getElementById('btn-topo');
         window.addEventListener('scroll', () => {
             btnTopo.style.display = window.scrollY > 300 ? 'block' : 'none';
@@ -922,6 +997,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
+        // 🔗 LINKS SUAVES
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -934,6 +1010,7 @@
             });
         });
 
+        // 🛑 PARAR FALA AO SAIR
         window.addEventListener('beforeunload', () => sinteseVoz.cancel());
     </script>
 </body>
