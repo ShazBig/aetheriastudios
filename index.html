@@ -783,14 +783,14 @@
         </section>
     </footer>
     <button id="btn-topo" aria-label="Voltar ao topo da página">↑</button>
-    <!-- ✅ FUNCIONA NO PC E NO CELULAR — BOTÕES APARECEM SÓ AO CLICAR/PASSAR -->
+    <!-- FUNCIONA NO PC E NO CELULAR — BOTÕES APARECEM SÓ AO CLICAR/PASSAR -->
     <script>
         const sinteseVoz = window.speechSynthesis;
         let jaTocouTela = false;
         const grupoAudio = document.getElementById('grupo-audio');
         let menuAberto = false;
 
-        // ✅ LIBERA A VOZ NO CELULAR — UMA SÓ VEZ
+        // LIBERA A VOZ NO CELULAR — UMA SÓ VEZ
         function liberarVozNoCelular() {
             if (!jaTocouTela) {
                 jaTocouTela = true;
@@ -805,7 +805,7 @@
         document.addEventListener('click', liberarVozNoCelular, { once: true });
         document.addEventListener('touchstart', liberarVozNoCelular, { once: true });
 
-        // ✅ No celular: clique em Ouvir Texto mostra/esconde os botões extras
+        // No celular: clique em Ouvir Texto mostra/esconde os botões extras
         document.getElementById('btn-ler').addEventListener('click', (e) => {
             e.stopPropagation();
             menuAberto = !menuAberto;
@@ -824,7 +824,7 @@
             }
         });
 
-        // 🔊 OUVIR TEXTO — AGORA LIBERADO ANTES DE FALAR!
+        //  OUVIR TEXTO — AGORA LIBERADO ANTES DE FALAR!
         document.getElementById('btn-ler').addEventListener('click', () => {
             sinteseVoz.cancel();
             const conteudo = document.getElementById('conteudo-principal').innerText;
@@ -836,7 +836,7 @@
             sinteseVoz.speak(fala);
         });
 
-        // ⏸️ PAUSAR/DESPAUSAR
+        //  PAUSAR/DESPAUSAR
         document.getElementById('btn-pausar').addEventListener('click', () => {
             if (sinteseVoz.speaking) {
                 if (sinteseVoz.paused) {
@@ -847,7 +847,7 @@
             }
         });
 
-        // ❌ PARAR
+        //  PARAR
         document.getElementById('btn-parar').addEventListener('click', () => {
             sinteseVoz.cancel();
             grupoAudio.classList.remove('ativo');
@@ -871,7 +871,7 @@
             }
         });
 
-        // 👁️ ALTO CONTRASTE
+        // ALTO CONTRASTE
         let altoContraste = false;
         document.getElementById('btn-alto-contraste').addEventListener('click', () => {
             altoContraste = !altoContraste;
@@ -891,7 +891,7 @@
             }
         });
 
-        // ⬆️ VOLTAR AO TOPO
+        //  VOLTAR AO TOPO
         const btnTopo = document.getElementById('btn-topo');
         window.addEventListener('scroll', () => {
             btnTopo.style.display = window.scrollY > 300 ? 'block' : 'none';
@@ -901,7 +901,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // 🔗 LINKS SUAVES
+        // LINKS SUAVES
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -914,7 +914,7 @@
             });
         });
 
-        // 🛑 PARAR FALA AO SAIR
+        // PARAR FALA AO SAIR
         window.addEventListener('beforeunload', () => sinteseVoz.cancel());
     </script>
 </body>
