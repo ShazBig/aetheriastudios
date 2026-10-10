@@ -2,8 +2,9 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#0b0b1a">
     <meta name="description" content="The Legend Of Aetheria — Guardian of Light. Uma aventura épica em um mundo de fantasia. Desvende segredos, derrote inimigos e torne-se a guardiã da luz.">
     <meta name="author" content="Hugo Raphael de Miranda / Studios Aetheria">
     <meta name="keywords" content="jogo, aventura, fantasia, 2D, RPG, Raylib, C++, Aetheria, Lira, Guardiã da Luz">
@@ -16,906 +17,1299 @@
     <title>The Legend Of Aetheria — Site Oficial</title>
     <link rel="icon" type="image/png" href="icone.png">
     <link rel="shortcut icon" type="image/png" href="icone.png">
-    <link rel="canonical" href="#">
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --cor-primaria: #1a1a2e;
-            --cor-secundaria: #16213e;
-            --cor-destaque: #f9c74f;
-            --cor-destaque-escuro: #e0a800;
-            --cor-texto: #ffffff;
-            --cor-fundo: #0f0f1a;
-            --cor-card: #1e1e30;
-            --sombra-suave: 0 8px 30px rgba(0,0,0,0.4);
-            --sombra-destaque: 0 0 25px rgba(249, 199, 79, 0.35);
-            --transicao: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --raio-borda: 14px;
-            --fonte-padrao: 'Segoe UI', 'Roboto', Tahoma, Geneva, Verdana, sans-serif;
-            --tamanho-fonte: 16px;
+            --fundo: #0b0b1a;
+            --fundo-2: #11112a;
+            --card: #17172f;
+            --card-2: #1d1d3a;
+            --linha: rgba(249, 199, 79, 0.18);
+            --ouro: #f9c74f;
+            --ouro-escuro: #e0a800;
+            --violeta: #8b7bff;
+            --sombra-vil: #c77dff;
+            --texto: #f4f4fb;
+            --texto-suave: #b9b9d3;
+            --raio: 16px;
+            --fonte-titulo: 'Cinzel', 'Georgia', 'Times New Roman', serif;
+            --fonte-texto: 'Nunito Sans', 'Segoe UI', Roboto, Tahoma, Arial, sans-serif;
+            --altura-header: 68px;
+            --transicao: 0.25s ease;
         }
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         html {
             scroll-behavior: smooth;
-            scroll-padding-top: 80px;
-            font-size: var(--tamanho-fonte);
+            scroll-padding-top: calc(var(--altura-header) + 16px);
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
         }
+
         body {
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
+            background: var(--fundo);
+            color: var(--texto);
+            font-family: var(--fonte-texto);
             line-height: 1.7;
-            font-family: var(--fonte-padrao);
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+            overflow-x: hidden;
         }
-        ul { list-style: none; }
-        a { text-decoration: none; color: inherit; }
+
+        ul, ol { list-style: none; }
+        a { color: inherit; text-decoration: none; }
         img { max-width: 100%; height: auto; display: block; }
-        button { font-family: inherit; }
-        /* ✅ BARRA DE ACESSIBILIDADE — BOTÕES APARECEM SÓ AO PASSAR/CLICAR */
-        .acessibilidade-barra {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #000;
-            padding: 0.5rem 1rem;
-            z-index: 1001;
-            display: flex;
-            justify-content: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            border-bottom: 2px solid var(--cor-destaque);
-        }
-        .grupo-audio {
-            display: flex;
-            gap: 0.6rem;
-            align-items: center;
-            position: relative;
-        }
-        .botoes-audio-extras {
-            display: flex;
-            gap: 0.6rem;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-        }
-        /* ✅ APARECE ao passar o mouse OU quando estiver ativo/clicado */
-        .grupo-audio:hover .botoes-audio-extras,
-        .grupo-audio.ativo .botoes-audio-extras {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-        }
-        .btn-acessibilidade {
-            background: var(--cor-destaque);
-            color: #000;
-            border: 2px solid var(--cor-destaque);
-            padding: 0.5rem 1rem;
+        button { font: inherit; color: inherit; cursor: pointer; }
+
+        :focus-visible {
+            outline: 3px solid var(--ouro);
+            outline-offset: 3px;
             border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: var(--transicao);
-            white-space: nowrap;
         }
-        .btn-acessibilidade:hover,
-        .btn-acessibilidade:focus {
-            background: var(--cor-destaque-escuro);
-            outline: 3px solid #fff;
-            outline-offset: 2px;
-        }
+
         .pular-conteudo {
             position: absolute;
-            top: -50px;
-            left: 10px;
-            background: var(--cor-destaque);
+            left: 12px;
+            top: -60px;
+            background: var(--ouro);
             color: #000;
             padding: 0.7rem 1rem;
-            z-index: 1002;
-            font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
+            font-weight: 700;
+            z-index: 2000;
         }
-        .pular-conteudo:focus {
-            top: 10px;
-        }
+        .pular-conteudo:focus { top: 12px; }
+
+        /* ---------- CABEÇALHO ---------- */
         header {
-            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
-            padding: 1rem 2rem;
-            padding-top: 4rem;
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(249, 199, 79, 0.08);
+            height: var(--altura-header);
+            background: rgba(11, 11, 26, 0.85);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--linha);
+            padding-top: env(safe-area-inset-top, 0);
+            height: calc(var(--altura-header) + env(safe-area-inset-top, 0px));
         }
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .nav {
             max-width: 1200px;
+            height: var(--altura-header);
             margin: 0 auto;
-            flex-wrap: wrap;
+            padding: 0 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             gap: 1rem;
         }
         .logo {
-            font-size: 1.7rem;
+            font-family: var(--fonte-titulo);
             font-weight: 700;
-            color: var(--cor-destaque);
-            letter-spacing: 0.5px;
-            transition: var(--transicao);
-            position: relative;
-        }
-        .logo:hover, .logo:focus {
-            text-shadow: 0 0 12px rgba(249, 199, 79, 0.5);
-            outline: 2px solid var(--cor-destaque);
-            outline-offset: 4px;
-        }
-        .nav-links {
+            font-size: 1.2rem;
+            color: var(--ouro);
             display: flex;
-            list-style: none;
-            gap: 1.4rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .nav-links a {
-            color: var(--cor-texto);
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transicao);
-            padding: 0.4rem 0.6rem;
-            border-bottom: 3px solid transparent;
-            position: relative;
-        }
-        .nav-links a:hover,
-        .nav-links a:focus {
-            color: var(--cor-destaque);
-            border-bottom-color: var(--cor-destaque);
-            outline: 2px solid var(--cor-destaque);
-            outline-offset: 2px;
-            border-radius: 4px;
-        }
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), url('fundo-lira.png') center top / cover no-repeat;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 2rem;
-            background-attachment: fixed;
-            background-size: cover;
-            background-position: center top;
-            position: relative;
+            gap: 0.6rem;
+            white-space: nowrap;
         }
-        .hero::before {
-            content: '';
+        .logo img { width: 34px; height: 34px; border-radius: 8px; object-fit: contain; }
+        .nav-links { display: flex; gap: 0.25rem; align-items: center; }
+        .nav-links a {
+            display: block;
+            padding: 0.5rem 0.85rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--texto-suave);
+            transition: var(--transicao);
+        }
+        .nav-links a:hover { color: var(--texto); background: rgba(249, 199, 79, 0.1); }
+        .nav-links a.ativo { color: #1a1300; background: var(--ouro); }
+
+        .btn-menu {
+            display: none;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            border: 1px solid var(--linha);
+            background: var(--card);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .btn-menu span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--ouro);
+            border-radius: 2px;
+            transition: var(--transicao);
+        }
+        .btn-menu[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .btn-menu[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .btn-menu[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            position: relative;
+            min-height: calc(100vh - var(--altura-header));
+            min-height: calc(100svh - var(--altura-header));
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 4rem 1.25rem 5rem;
+            overflow: hidden;
+            background:
+                linear-gradient(180deg, rgba(8, 8, 22, 0.55) 0%, rgba(11, 11, 26, 0.92) 100%),
+                url('fundo-lira.png') center top / cover no-repeat,
+                radial-gradient(ellipse at 50% 30%, #2a2158 0%, var(--fundo) 70%);
+        }
+        .estrelas {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(15,15,26,0.5) 100%);
             pointer-events: none;
+            background-image:
+                radial-gradient(1.5px 1.5px at 12% 22%, #fff, transparent),
+                radial-gradient(1px 1px at 28% 70%, #fff, transparent),
+                radial-gradient(2px 2px at 47% 15%, #ffe9a8, transparent),
+                radial-gradient(1px 1px at 63% 55%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 78% 28%, #fff, transparent),
+                radial-gradient(2px 2px at 90% 78%, #ffe9a8, transparent),
+                radial-gradient(1px 1px at 35% 40%, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 8% 85%, #fff, transparent),
+                radial-gradient(1px 1px at 72% 88%, #fff, transparent);
+            animation: cintilar 5s ease-in-out infinite alternate;
         }
-        .hero > * { position: relative; z-index: 1; }
-        .hero h1 {
-            font-size: 3.5rem;
-            color: var(--cor-destaque);
-            margin-bottom: 1.2rem;
-            text-shadow: 0 0 30px rgba(249, 199, 79, 0.6);
-            line-height: 1.2;
-            letter-spacing: 1px;
-            animation: brilho 3s ease-in-out infinite alternate;
-        }
-        @keyframes brilho {
-            from { text-shadow: 0 0 20px rgba(249, 199, 79, 0.4); }
-            to   { text-shadow: 0 0 35px rgba(249, 199, 79, 0.8); }
-        }
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 750px;
-            margin-bottom: 2.5rem;
-            line-height: 1.8;
-        }
-        .btn {
-            padding: 1rem 2.4rem;
-            background: linear-gradient(135deg, var(--cor-destaque), var(--cor-destaque-escuro));
-            color: #000;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: 10px;
-            transition: var(--transicao);
-            border: 3px solid var(--cor-destaque);
-            cursor: pointer;
-            font-size: 1.05rem;
-            display: inline-block;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(249, 199, 79, 0.3);
+        @keyframes cintilar { from { opacity: 0.45; } to { opacity: 1; } }
+
+        .hero-conteudo {
             position: relative;
-            overflow: hidden;
+            max-width: 820px;
+            z-index: 1;
         }
-        .btn:hover,
-        .btn:focus {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(249, 199, 79, 0.45);
-            outline: 3px solid #fff;
-            outline-offset: 3px;
-        }
-        .btn:active {
-            transform: translateY(-1px);
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-        section {
-            margin-bottom: 2rem;
-        }
-        section h2 {
-            font-size: 2rem;
-            color: var(--cor-destaque);
-            margin-bottom: 2.2rem;
-            border-bottom: 3px solid var(--cor-destaque);
-            padding-bottom: 0.6rem;
-            display: inline-block;
-            position: relative;
-        }
-        section h2::after {
+        /* o brilho da luz sagrada atrás do título: o elemento memorável da página */
+        .hero-conteudo::before {
             content: '';
             position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 60%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--cor-destaque), transparent);
+            left: 50%;
+            top: 42%;
+            width: min(620px, 140vw);
+            aspect-ratio: 1;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(249, 199, 79, 0.28) 0%, rgba(249, 199, 79, 0.08) 38%, transparent 68%);
+            z-index: -1;
+            animation: pulsar 6s ease-in-out infinite alternate;
         }
-        .historia p {
-            margin-bottom: 1.4rem;
-            font-size: 1.08rem;
-            text-align: justify;
-            hyphens: auto;
+        @keyframes pulsar {
+            from { transform: translate(-50%, -50%) scale(0.92); opacity: 0.75; }
+            to   { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
         }
-        .dicas-grid,
-        .personagens-grid,
-        .galeria-grid {
-            display: grid;
-            gap: 1.6rem;
-            margin-top: 2rem;
+        .selo {
+            display: inline-block;
+            padding: 0.4rem 1.1rem;
+            border: 1px solid var(--linha);
+            border-radius: 999px;
+            background: rgba(23, 23, 47, 0.7);
+            color: var(--ouro);
+            font-weight: 600;
+            font-size: 0.92rem;
+            margin-bottom: 1.5rem;
         }
-        .dicas-grid {
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        .hero h1 {
+            font-family: var(--fonte-titulo);
+            font-weight: 900;
+            font-size: clamp(2.2rem, 7vw, 4.6rem);
+            line-height: 1.12;
+            color: var(--ouro);
+            text-shadow: 0 0 40px rgba(249, 199, 79, 0.45), 0 4px 12px rgba(0, 0, 0, 0.6);
         }
-        .personagens-grid {
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        .hero h1 small {
+            display: block;
+            margin-top: 0.6rem;
+            font-size: 0.42em;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            color: var(--texto);
+            text-shadow: none;
         }
-        .galeria-grid {
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        .hero p {
+            max-width: 640px;
+            margin: 1.8rem auto 2.4rem;
+            font-size: clamp(1.02rem, 2.4vw, 1.25rem);
+            color: #e6e6f5;
         }
-        .dica-card,
-        .personagem-card,
-        .galeria-img {
-            background: var(--cor-card);
-            padding: 1.6rem;
-            border-radius: var(--raio-borda);
-            transition: var(--transicao);
-            border: 2px solid rgba(249, 199, 79, 0.15);
-            will-change: transform, box-shadow;
-        }
-        .dica-card {
-            border-left: 5px solid var(--cor-destaque);
-        }
-        .dica-card:hover,
-        .dica-card:focus-within,
-        .personagem-card:hover,
-        .personagem-card:focus-within {
-            transform: translateY(-6px);
-            box-shadow: var(--sombra-suave);
-            border-color: rgba(249, 199, 79, 0.4);
-            outline: 2px solid var(--cor-destaque);
-            outline-offset: 2px;
-        }
-        .dica-card h3,
-        .personagem-card h3 {
-            color: var(--cor-destaque);
-            margin-bottom: 0.9rem;
-            font-size: 1.15rem;
-        }
-        .personagem-card {
-            text-align: center;
-        }
-        .personagem-card h3 {
-            margin: 1rem 0 0.6rem;
-        }
-        .galeria-img {
-            height: 180px;
-            display: flex;
+        .hero-botoes { display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: var(--cor-destaque);
-            font-size: 1.15rem;
-            border: 3px dashed rgba(249, 199, 79, 0.4);
-            background: linear-gradient(135deg, var(--cor-card), #252540);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .galeria-img:hover,
-        .galeria-img:focus {
-            border-color: var(--cor-destaque);
-            background: linear-gradient(135deg, #252540, var(--cor-card));
-            outline: 2px solid var(--cor-destaque);
-            outline-offset: 2px;
-        }
-        .req-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 1.5rem;
+            gap: 0.5rem;
+            padding: 0.95rem 2rem;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        .req-table th,
-        .req-table td {
-            padding: 1.1rem;
-            text-align: left;
-            border-bottom: 2px solid #2a2a40;
-            transition: background-color 0.2s ease;
-        }
-        .req-table th {
-            color: #000;
-            background: var(--cor-destaque);
             font-weight: 700;
-        }
-        .req-table tr:last-child td {
-            border-bottom: none;
-        }
-        .req-table tr:hover td,
-        .req-table tr:focus-within td {
-            background: rgba(249, 199, 79, 0.08);
-        }
-        .contato {
+            font-size: 1.02rem;
+            border: 2px solid var(--ouro);
+            transition: var(--transicao);
             text-align: center;
         }
-        .contato p a {
-            color: var(--cor-destaque);
-            text-decoration: underline;
-            text-underline-offset: 3px;
+        .btn-primario {
+            background: linear-gradient(135deg, var(--ouro), var(--ouro-escuro));
+            color: #1a1300;
+            box-shadow: 0 6px 22px rgba(249, 199, 79, 0.3);
+        }
+        .btn-primario:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(249, 199, 79, 0.45); }
+        .btn-secundario { background: rgba(11, 11, 26, 0.55); color: var(--ouro); }
+        .btn-secundario:hover { background: rgba(249, 199, 79, 0.12); transform: translateY(-3px); }
+        .btn[aria-disabled="true"] { opacity: 0.7; cursor: not-allowed; pointer-events: none; }
+
+        /* ---------- SEÇÕES ---------- */
+        .secao { padding: 5rem 1.25rem; }
+        .secao.alt { background: var(--fundo-2); }
+        .miolo { max-width: 1120px; margin: 0 auto; }
+
+        .titulo-secao {
+            font-family: var(--fonte-titulo);
+            font-weight: 700;
+            font-size: clamp(1.6rem, 4vw, 2.3rem);
+            color: var(--ouro);
+            line-height: 1.25;
+        }
+        .titulo-secao::after {
+            content: '';
+            display: block;
+            width: 72px;
+            height: 3px;
+            margin-top: 0.8rem;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--ouro), transparent);
+        }
+        .subtitulo-secao { margin-top: 1rem; color: var(--texto-suave); max-width: 62ch; }
+        .cabeca-secao { margin-bottom: 2.5rem; }
+
+        /* História */
+        .historia-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .historia-texto p { margin-bottom: 1.2rem; font-size: 1.08rem; max-width: 68ch; }
+        .historia-texto p:first-of-type::first-letter {
+            font-family: var(--fonte-titulo);
+            font-weight: 900;
+            font-size: 3.6rem;
+            float: left;
+            line-height: 0.85;
+            padding: 0.35rem 0.6rem 0 0;
+            color: var(--ouro);
+        }
+        .citacao {
+            position: sticky;
+            top: calc(var(--altura-header) + 24px);
+            padding: 2rem 1.75rem;
+            border-radius: var(--raio);
+            background:
+                radial-gradient(circle at 100% 0%, rgba(139, 123, 255, 0.22), transparent 60%),
+                var(--card);
+            border: 1px solid var(--linha);
+        }
+        .citacao blockquote {
+            font-family: var(--fonte-titulo);
+            font-size: 1.28rem;
+            line-height: 1.55;
+            color: var(--texto);
+        }
+        .citacao cite {
+            display: block;
+            margin-top: 1.2rem;
+            font-style: normal;
+            color: var(--ouro);
+            font-weight: 600;
+        }
+
+        /* Dicas */
+        .dicas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+        .dica {
+            display: flex;
+            gap: 1rem;
+            padding: 1.4rem;
+            border-radius: var(--raio);
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-left: 4px solid var(--ouro);
             transition: var(--transicao);
         }
-        .contato p a:hover,
-        .contato p a:focus {
-            background: var(--cor-destaque);
-            color: #000;
-            padding: 2px 6px;
-            border-radius: 4px;
-            outline: 3px solid #fff;
-            outline-offset: 2px;
+        .dica:hover { transform: translateY(-4px); border-color: var(--linha); border-left-color: var(--ouro); }
+        .dica-icone {
+            flex: 0 0 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            border-radius: 12px;
+            background: rgba(249, 199, 79, 0.12);
         }
+        .dica h3 { font-size: 1.08rem; color: var(--ouro); margin-bottom: 0.35rem; }
+        .dica p { color: var(--texto-suave); font-size: 0.97rem; }
+
+        .dica-torres { grid-column: 1 / -1; flex-direction: column; border-left-color: var(--violeta); }
+        .dica-torres .linha-topo { display: flex; gap: 1rem; }
+        .ordem-torres {
+            counter-reset: torre;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.4rem;
+        }
+        .ordem-torres li {
+            counter-increment: torre;
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 0.5rem 1rem 0.5rem 0.5rem;
+            border-radius: 999px;
+            background: var(--card-2);
+            border: 1px solid var(--linha);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .ordem-torres li::before {
+            content: counter(torre);
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--ouro);
+            color: #1a1300;
+            font-weight: 800;
+            font-size: 0.85rem;
+        }
+
+        /* Personagens */
+        .personagens-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+        .personagem {
+            padding: 1.6rem 1.3rem;
+            text-align: center;
+            border-radius: var(--raio);
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: var(--transicao);
+        }
+        .personagem:hover { transform: translateY(-4px); border-color: var(--linha); }
+        .avatar {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1rem;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            font-family: var(--fonte-titulo);
+            font-weight: 900;
+            font-size: 1.9rem;
+            color: #1a1300;
+            background: linear-gradient(135deg, var(--ouro), #ff9e2c);
+            box-shadow: 0 0 0 4px rgba(249, 199, 79, 0.15);
+        }
+        .personagem h3 { font-family: var(--fonte-titulo); font-size: 1.15rem; color: var(--texto); }
+        .papel { display: block; margin: 0.15rem 0 0.7rem; font-size: 0.88rem; font-weight: 700; color: var(--ouro); }
+        .personagem p { font-size: 0.94rem; color: var(--texto-suave); }
+
+        .personagem.destaque {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.4rem;
+            align-items: center;
+            text-align: left;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(249, 199, 79, 0.18), transparent 55%),
+                var(--card-2);
+            border-color: var(--linha);
+        }
+        .personagem.destaque .avatar { width: 96px; height: 96px; font-size: 2.6rem; margin: 0; }
+        .personagem.vila { border-color: rgba(199, 125, 255, 0.35); }
+        .personagem.vila .avatar { background: linear-gradient(135deg, var(--sombra-vil), #6a3df0); color: #fff; box-shadow: 0 0 0 4px rgba(199, 125, 255, 0.18); }
+        .personagem.vila .papel { color: var(--sombra-vil); }
+
+        /* Galeria */
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.1rem;
+        }
+        .quadro {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border-radius: var(--raio);
+            border: 2px dashed rgba(249, 199, 79, 0.35);
+            background: linear-gradient(135deg, var(--card), #202044);
+            color: var(--ouro);
+            font-weight: 600;
+            text-align: center;
+            padding: 1rem;
+            transition: var(--transicao);
+        }
+        .quadro:hover { border-color: var(--ouro); transform: translateY(-3px); }
+        .quadro .moldura { font-size: 1.8rem; }
+        .quadro small { color: var(--texto-suave); font-weight: 400; font-size: 0.85rem; }
+
+        /* Requisitos */
+        .tabela-wrap { border-radius: var(--raio); overflow: hidden; border: 1px solid var(--linha); }
+        .req-table { width: 100%; border-collapse: collapse; background: var(--card); }
+        .req-table th, .req-table td { padding: 1.05rem 1.2rem; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+        .req-table thead th { background: var(--ouro); color: #1a1300; font-weight: 800; }
+        .req-table tbody th { font-weight: 700; color: var(--ouro); background: rgba(249, 199, 79, 0.05); }
+        .req-table tbody tr:last-child th, .req-table tbody tr:last-child td { border-bottom: none; }
+        .req-table tbody tr:hover td { background: rgba(249, 199, 79, 0.05); }
+
+        /* Sobre */
+        .sobre-layout {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        .sobre-layout p { font-size: 1.05rem; max-width: 62ch; }
+        .ficha {
+            padding: 1.8rem;
+            border-radius: var(--raio);
+            background: var(--card);
+            border: 1px solid var(--linha);
+        }
+        .ficha dl { display: grid; gap: 1rem; }
+        .ficha dt { font-size: 0.88rem; color: var(--texto-suave); }
+        .ficha dd { font-weight: 700; font-size: 1.05rem; }
+        .ficha .btn { width: 100%; margin-top: 1.6rem; }
+
+        /* Informações legais e contato */
+        .info-lista { display: grid; gap: 0.9rem; max-width: 860px; }
+        details {
+            border-radius: var(--raio);
+            background: var(--card);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            overflow: hidden;
+        }
+        details[open] { border-color: var(--linha); }
+        summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 1.15rem 1.4rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        summary::-webkit-details-marker { display: none; }
+        summary::after {
+            content: '+';
+            flex: 0 0 auto;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(249, 199, 79, 0.14);
+            color: var(--ouro);
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+        details[open] summary::after { content: '–'; }
+        .info-corpo { padding: 0 1.4rem 1.4rem; color: var(--texto-suave); }
+        .info-corpo h3 { color: var(--ouro); font-size: 1rem; margin: 1.1rem 0 0.25rem; }
+        .info-corpo p { margin-bottom: 0.4rem; }
+        .info-corpo a { color: var(--ouro); text-decoration: underline; text-underline-offset: 3px; word-break: break-word; }
+
+        /* Rodapé */
         footer {
-            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            padding: 2.5rem 1.25rem calc(2.5rem + env(safe-area-inset-bottom, 0px));
             text-align: center;
-            padding: 3rem 2rem;
-            margin-top: 4rem;
-            border-top: 2px solid rgba(249, 199, 79, 0.15);
+            background: #07070f;
+            border-top: 1px solid var(--linha);
+            color: var(--texto-suave);
+            font-size: 0.95rem;
         }
-        footer > p {
-            margin-bottom: 0.5rem;
+        footer .links { margin-top: 1rem; display: flex; gap: 1.4rem; justify-content: center; flex-wrap: wrap; }
+        footer .links a { color: var(--ouro); text-decoration: underline; text-underline-offset: 3px; }
+
+        /* ---------- ACESSIBILIDADE (painel flutuante) ---------- */
+        .acc {
+            position: fixed;
+            left: max(1rem, env(safe-area-inset-left, 0px));
+            bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+            z-index: 1500;
         }
-        footer a {
-            color: var(--cor-destaque);
-            text-decoration: underline;
-            text-underline-offset: 3px;
+        .acc-toggle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 2px solid var(--ouro);
+            background: var(--card-2);
+            color: var(--ouro);
+            font-size: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            display: grid;
+            place-items: center;
+        }
+        .acc-painel {
+            position: absolute;
+            left: 0;
+            bottom: 68px;
+            width: min(310px, calc(100vw - 2rem));
+            padding: 1rem;
+            border-radius: var(--raio);
+            background: var(--card-2);
+            border: 1px solid var(--linha);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6);
+            display: none;
+        }
+        .acc.aberto .acc-painel { display: block; }
+        .acc-painel h2 { font-family: var(--fonte-titulo); font-size: 1rem; color: var(--ouro); margin-bottom: 0.8rem; }
+        .acc-grupo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.6rem; }
+        .acc-btn {
+            min-height: 48px;
+            padding: 0.5rem 0.3rem;
+            border-radius: 10px;
+            border: 1px solid var(--linha);
+            background: var(--card);
+            font-weight: 700;
+            font-size: 0.9rem;
+            line-height: 1.2;
             transition: var(--transicao);
         }
-        footer a:hover,
-        footer a:focus {
-            background: var(--cor-destaque);
-            color: #000;
-            padding: 2px 6px;
-            border-radius: 4px;
-            outline: 3px solid #fff;
-            outline-offset: 2px;
-        }
-        footer section {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
+        .acc-btn:hover { background: rgba(249, 199, 79, 0.14); }
+        .acc-btn[aria-pressed="true"] { background: var(--ouro); color: #1a1300; border-color: var(--ouro); }
+        .acc-btn.largo { grid-column: 1 / -1; }
+        .acc-status { min-height: 1.4em; margin-top: 0.4rem; font-size: 0.88rem; color: var(--texto-suave); }
+
+        /* Voltar ao topo */
         #btn-topo {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
+            right: max(1rem, env(safe-area-inset-right, 0px));
+            bottom: max(1rem, env(safe-area-inset-bottom, 0px));
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, var(--cor-destaque), var(--cor-destaque-escuro));
-            color: #000;
-            border: 3px solid var(--cor-destaque);
             border-radius: 50%;
+            border: 2px solid var(--ouro);
+            background: linear-gradient(135deg, var(--ouro), var(--ouro-escuro));
+            color: #1a1300;
             font-size: 1.4rem;
-            cursor: pointer;
+            font-weight: 800;
             display: none;
-            z-index: 999;
-            box-shadow: 0 4px 15px rgba(249, 199, 79, 0.4);
-            transition: var(--transicao);
-            will-change: transform;
+            z-index: 1400;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
         }
-        #btn-topo:hover,
-        #btn-topo:focus {
-            transform: translateY(-3px);
-            outline: 3px solid #fff;
-            outline-offset: 2px;
+
+        /* ---------- ALTO CONTRASTE ---------- */
+        body.alto-contraste {
+            --fundo: #000;
+            --fundo-2: #000;
+            --card: #0d0d0d;
+            --card-2: #141414;
+            --ouro: #ffff00;
+            --ouro-escuro: #e6e600;
+            --texto: #fff;
+            --texto-suave: #fff;
+            --linha: #ffff00;
         }
-        @media (max-width: 768px) {
-            html {
-                scroll-padding-top: 100px;
-            }
-            header {
-                padding: 1rem;
-                padding-top: 4.5rem;
-            }
-            .logo {
-                font-size: 1.4rem;
-                width: 100%;
-                text-align: center;
-            }
+        body.alto-contraste .hero { background: #000; }
+        body.alto-contraste .estrelas, body.alto-contraste .hero-conteudo::before { display: none; }
+
+        /* ---------- RESPONSIVO ---------- */
+        @media (max-width: 980px) {
+            .personagens-grid { grid-template-columns: repeat(2, 1fr); }
+            .historia-layout, .sobre-layout { grid-template-columns: 1fr; gap: 2rem; }
+            .citacao { position: static; }
+        }
+
+        @media (max-width: 860px) {
+            :root { --altura-header: 62px; }
+            .btn-menu { display: flex; }
             .nav-links {
-                gap: 0.8rem 1rem;
-                width: 100%;
-                margin-top: 0.5rem;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: calc(var(--altura-header) + env(safe-area-inset-top, 0px));
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.2rem;
+                padding: 0.75rem 1rem 1.1rem;
+                background: rgba(11, 11, 26, 0.98);
+                border-bottom: 1px solid var(--linha);
+                max-height: calc(100vh - var(--altura-header));
+                overflow-y: auto;
+                display: none;
             }
-            .nav-links a {
-                font-size: 0.95rem;
-            }
-            .hero {
-                background-attachment: scroll;
-                background-position: center top;
-                padding: 1.5rem;
-                min-height: 100vh;
-            }
-            .hero h1 {
-                font-size: 2.1rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            .btn {
-                padding: 0.9rem 1.8rem;
-                font-size: 1rem;
-                width: 100%;
-                max-width: 320px;
-            }
-            .container {
-                padding: 2.5rem 1.2rem;
-            }
-            section h2 {
-                font-size: 1.55rem;
-            }
-            .historia p {
-                font-size: 1rem;
-                text-align: left;
-            }
-            .dicas-grid,
-            .personagens-grid,
-            .galeria-grid {
-                grid-template-columns: 1fr;
-            }
-            .req-table th,
-            .req-table td {
-                padding: 0.8rem;
-                font-size: 0.9rem;
-            }
-            footer {
-                padding: 2rem 1.2rem;
-                font-size: 0.95rem;
-            }
-            .acessibilidade-barra {
-                gap: 0.4rem;
-                padding: 0.4rem 0.5rem;
-            }
-            .btn-acessibilidade {
-                padding: 0.4rem 0.6rem;
-                font-size: 0.8rem;
-            }
+            .nav-links.aberto { display: flex; }
+            .nav-links a { padding: 0.9rem 1rem; font-size: 1.05rem; border-radius: 12px; }
+            .logo { font-size: 1.05rem; }
         }
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.75rem;
-            }
-            .nav-links {
-                gap: 0.6rem;
-            }
-            .nav-links a {
-                font-size: 0.88rem;
-            }
+
+        @media (max-width: 640px) {
+            .secao { padding: 3.5rem 1.1rem; }
+            .hero { padding: 3rem 1.1rem 4rem; }
+            .hero-botoes .btn { width: 100%; }
+            .historia-texto p { font-size: 1.02rem; }
+            .personagens-grid { grid-template-columns: 1fr; }
+            .personagem.destaque { grid-column: auto; grid-template-columns: 1fr; text-align: center; }
+            .personagem.destaque .avatar { margin: 0 auto; }
+            .dica { padding: 1.1rem; }
+            .dica-torres .linha-topo { flex-direction: row; }
+            .ordem-torres li { width: 100%; }
+
+            /* tabela vira lista de cartões */
+            .req-table thead { position: absolute; left: -9999px; }
+            .req-table, .req-table tbody, .req-table tr, .req-table th, .req-table td { display: block; width: 100%; }
+            .req-table tr { border-bottom: 1px solid var(--linha); padding: 0.4rem 0; }
+            .req-table tr:last-child { border-bottom: none; }
+            .req-table tbody th { background: transparent; padding: 0.9rem 1.1rem 0.2rem; border: none; font-size: 1.02rem; }
+            .req-table td { padding: 0.3rem 1.1rem; border: none; font-size: 0.95rem; }
+            .req-table td::before { content: attr(data-label) ': '; font-weight: 700; color: var(--ouro); }
+            .acc-grupo { grid-template-columns: repeat(3, 1fr); }
         }
+
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
 <body>
     <a href="#conteudo-principal" class="pular-conteudo">Pular para o conteúdo principal</a>
-    <!-- ✅ BOTÕES APARECEM SÓ AO PASSAR/CLICAR EM OUVIR TEXTO -->
-    <div class="acessibilidade-barra" role="toolbar" aria-label="Ferramentas de Acessibilidade">
-        <div class="grupo-audio" id="grupo-audio">
-            <button class="btn-acessibilidade" id="btn-ler" aria-pressed="false" title="Ler texto em voz">🔊 Ouvir Texto</button>
-            <div class="botoes-audio-extras">
-                <button class="btn-acessibilidade" id="btn-pausar" title="Pausar/Despausar leitura">⏸️ Pausar/Despausar</button>
-                <button class="btn-acessibilidade" id="btn-parar" title="Parar de ler">❌ Parar</button>
-            </div>
-        </div>
-        <button class="btn-acessibilidade" id="btn-aumentar" title="Aumentar tamanho da letra">A+ Fonte</button>
-        <button class="btn-acessibilidade" id="btn-diminuir" title="Diminuir tamanho da letra">A- Fonte</button>
-        <button class="btn-acessibilidade" id="btn-alto-contraste" title="Modo alto contraste">👁️ Contraste</button>
-    </div>
-    <header role="banner">
-        <nav role="navigation" aria-label="Navegação Principal">
-            <a href="#inicio" class="logo" aria-label="Página Inicial — The Legend Of Aetheria">⚔️ The Legend Of Aetheria</a>
-            <ul class="nav-links">
+
+    <header>
+        <nav class="nav" aria-label="Navegação principal">
+            <a href="#inicio" class="logo" aria-label="The Legend Of Aetheria — início">
+                <img src="icone.png" alt="" width="34" height="34" onerror="this.style.display='none'">
+                <span>The Legend Of Aetheria</span>
+            </a>
+            <button class="btn-menu" id="btn-menu" aria-expanded="false" aria-controls="menu-links" aria-label="Abrir menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="menu-links">
                 <li><a href="#inicio">Início</a></li>
                 <li><a href="#historia">História</a></li>
                 <li><a href="#dicas">Dicas</a></li>
                 <li><a href="#personagens">Personagens</a></li>
                 <li><a href="#galeria">Galeria</a></li>
                 <li><a href="#requisitos">Requisitos</a></li>
-                <li><a href="#contato">Sobre</a></li>
+                <li><a href="#sobre">Sobre</a></li>
             </ul>
         </nav>
     </header>
+
     <main id="conteudo-principal">
-    <section class="hero" id="inicio" aria-labelledby="titulo-inicio">
-        <h1 id="titulo-inicio">The Legend Of Aetheria<br>Guardian of Light</h1>
-        <p role="text">Uma aventura épica em um mundo de fantasia. Desvende segredos, derrote inimigos e torne-se a guardiã da luz.</p>
-        <a href="#historia" class="btn" role="button" aria-label="Começar a aventura — ir para a história do jogo">Começar Aventura</a>
-    </section>
-    <section class="container historia" id="historia" aria-labelledby="titulo-historia">
-        <h2 id="titulo-historia">📖 A História do Jogo</h2>
-        <p>Há milênios, o reino de Aetheria foi protegido pela Luz Sagrada, uma força mágica que mantinha a paz e a harmonia entre todos os povos. Mas um dia, a Escuridão Eterna despertou das profundezas da terra e espalhou sua sombra sobre o mundo, corrompendo a natureza e aprisionando os Espíritos da Luz.</p>
-        
-        <p>Você é <strong>Lira</strong>, uma jovem escolhida pela profecia. Ao completar 16 anos, você descobre que possui um poder ancestral — o brilho das estrelas corre em suas veias. Agora, cabe a você atravessar as cinco Torres Elementais, derrotar os senhores das sombras e restaurar a luz do mundo antes que a lua negra cubra o céu para sempre.</p>
-        
-        <p>Sua jornada não será fácil. Criaturas corrompidas, quebra-cabeças antigos e segredos esquecidos esperam por você. Mas lembre-se: a coragem não é a ausência do medo, mas sim a vontade de seguir em frente apesar dele. Reúna aliados, encontre relíquias lendárias e prove que você é a verdadeira Guardiã da Luz!</p>
-    </section>
-    <section class="container" id="dicas" aria-labelledby="titulo-dicas">
-        <h2 id="titulo-dicas">💡 Dicas para Zerar o Jogo</h2>
-        <p>Confira as melhores dicas para completar 100% do jogo e não perder nenhum segredo!</p>
-        
-        <div class="dicas-grid" role="list" aria-label="Lista de dicas">
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>🗺️ Explore Tudo</h3>
-                <p>Não siga apenas a história principal! Existem cavernas escondidas, baús secretos e personagens com missões secundárias em cada canto do mapa. Muitos itens raros só aparecem em áreas opcionais.</p>
+
+        <section class="hero" id="inicio" aria-labelledby="titulo-inicio">
+            <div class="estrelas" aria-hidden="true"></div>
+            <div class="hero-conteudo">
+                <span class="selo">Jogo de aventura 2D em desenvolvimento</span>
+                <h1 id="titulo-inicio">The Legend Of Aetheria<small>Guardian of Light</small></h1>
+                <p>Uma aventura épica em um mundo de fantasia. Desvende segredos, derrote inimigos e torne-se a guardiã da luz.</p>
+                <div class="hero-botoes">
+                    <a href="#historia" class="btn btn-primario">Começar aventura</a>
+                    <a href="#personagens" class="btn btn-secundario">Conhecer os personagens</a>
+                </div>
             </div>
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>⚔️ Melhore suas Armas</h3>
-                <p>Guarde os cristais que encontra pelo caminho — eles servem para evoluir sua espada e arco na Vila dos Ferreiros. Uma arma melhor torna os chefes muito mais fáceis!</p>
+        </section>
+
+        <section class="secao" id="historia" aria-labelledby="titulo-historia">
+            <div class="miolo">
+                <div class="cabeca-secao">
+                    <h2 class="titulo-secao" id="titulo-historia">📖 A História do Jogo</h2>
+                </div>
+                <div class="historia-layout">
+                    <div class="historia-texto">
+                        <p>Há milênios, o reino de Aetheria foi protegido pela Luz Sagrada, uma força mágica que mantinha a paz e a harmonia entre todos os povos. Mas um dia, a Escuridão Eterna despertou das profundezas da terra e espalhou sua sombra sobre o mundo, corrompendo a natureza e aprisionando os Espíritos da Luz.</p>
+                        <p>Você é <strong>Lira</strong>, uma jovem escolhida pela profecia. Ao completar 16 anos, você descobre que possui um poder ancestral — o brilho das estrelas corre em suas veias. Agora, cabe a você atravessar as cinco Torres Elementais, derrotar os senhores das sombras e restaurar a luz do mundo antes que a lua negra cubra o céu para sempre.</p>
+                        <p>Sua jornada não será fácil. Criaturas corrompidas, quebra-cabeças antigos e segredos esquecidos esperam por você. Mas lembre-se: a coragem não é a ausência do medo, mas sim a vontade de seguir em frente apesar dele. Reúna aliados, encontre relíquias lendárias e prove que você é a verdadeira Guardiã da Luz!</p>
+                    </div>
+                    <aside class="citacao" aria-label="Frase do jogo">
+                        <blockquote>“A coragem não é a ausência do medo, mas sim a vontade de seguir em frente apesar dele.”</blockquote>
+                        <cite>— A jornada de Lira</cite>
+                    </aside>
+                </div>
             </div>
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>🏰 Ordem das Torres</h3>
-                <p>Recomendado: 1️⃣ Torre da Floresta → 2️⃣ Torre do Vento → 3️⃣ Torre do Trovão → 4️⃣ Torre da Água → 5️⃣ Torre das Sombras. Cada torre dá uma habilidade nova que ajuda na próxima!</p>
+        </section>
+
+        <section class="secao alt" id="dicas" aria-labelledby="titulo-dicas">
+            <div class="miolo">
+                <div class="cabeca-secao">
+                    <h2 class="titulo-secao" id="titulo-dicas">💡 Dicas para Zerar o Jogo</h2>
+                    <p class="subtitulo-secao">Confira as melhores dicas para completar 100% do jogo e não perder nenhum segredo!</p>
+                </div>
+                <ul class="dicas-grid">
+                    <li class="dica dica-torres">
+                        <div class="linha-topo">
+                            <span class="dica-icone" aria-hidden="true">🏰</span>
+                            <div>
+                                <h3>Ordem das Torres</h3>
+                                <p>Cada torre dá uma habilidade nova que ajuda na próxima. Esta é a ordem recomendada:</p>
+                            </div>
+                        </div>
+                        <ol class="ordem-torres">
+                            <li>Torre da Floresta</li>
+                            <li>Torre do Vento</li>
+                            <li>Torre do Trovão</li>
+                            <li>Torre da Água</li>
+                            <li>Torre das Sombras</li>
+                        </ol>
+                    </li>
+                    <li class="dica">
+                        <span class="dica-icone" aria-hidden="true">🗺️</span>
+                        <div>
+                            <h3>Explore Tudo</h3>
+                            <p>Não siga apenas a história principal! Existem cavernas escondidas, baús secretos e personagens com missões secundárias em cada canto do mapa. Muitos itens raros só aparecem em áreas opcionais.</p>
+                        </div>
+                    </li>
+                    <li class="dica">
+                        <span class="dica-icone" aria-hidden="true">⚔️</span>
+                        <div>
+                            <h3>Melhore suas Armas</h3>
+                            <p>Guarde os cristais que encontra pelo caminho — eles servem para evoluir sua espada e arco na Vila dos Ferreiros. Uma arma melhor torna os chefes muito mais fáceis!</p>
+                        </div>
+                    </li>
+                    <li class="dica">
+                        <span class="dica-icone" aria-hidden="true">💊</span>
+                        <div>
+                            <h3>Economize Poções</h3>
+                            <p>Não use poções de cura em inimigos comuns! Guarde-as para os chefes. Você pode recuperar vida descansando nas fontes mágicas espalhadas pelo mapa.</p>
+                        </div>
+                    </li>
+                    <li class="dica">
+                        <span class="dica-icone" aria-hidden="true">👂</span>
+                        <div>
+                            <h3>Fale com Todos</h3>
+                            <p>Os moradores das vilas dão dicas importantes, revelam locais escondidos e até oferecem itens gratuitos. Fale com todos os NPCs antes de seguir adiante!</p>
+                        </div>
+                    </li>
+                    <li class="dica">
+                        <span class="dica-icone" aria-hidden="true">📦</span>
+                        <div>
+                            <h3>Itens Obrigatórios</h3>
+                            <p>Em cada torre existe um item chave necessário para derrotar o chefe final daquela área. Sempre procure bem antes de enfrentar o chefe!</p>
+                        </div>
+                    </li>
+                    <li class="dica">
+                        <span class="dica-icone" aria-hidden="true">🧩</span>
+                        <div>
+                            <h3>Quebra-Cabeças</h3>
+                            <p>Alguns puzzles exigem atenção aos detalhes. Observe o ambiente, cores e padrões. Às vezes, a solução está em algo que você já viu antes!</p>
+                        </div>
+                    </li>
+                    <li class="dica">
+                        <span class="dica-icone" aria-hidden="true">💾</span>
+                        <div>
+                            <h3>Salve Sempre!</h3>
+                            <p>O jogo tem 3 slots de salvamento no início do jogo. No decorrer da aventura, salve sempre que possível, para não perder seu progresso!</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>💊 Economize Poções</h3>
-                <p>Não use poções de cura em inimigos comuns! Guarde-as para os chefes. Você pode recuperar vida descansando nas fontes mágicas espalhadas pelo mapa.</p>
+        </section>
+
+        <section class="secao" id="personagens" aria-labelledby="titulo-personagens">
+            <div class="miolo">
+                <div class="cabeca-secao">
+                    <h2 class="titulo-secao" id="titulo-personagens">👥 Personagens Principais</h2>
+                </div>
+                <ul class="personagens-grid">
+                    <li class="personagem destaque">
+                        <div class="avatar" aria-hidden="true">L</div>
+                        <div>
+                            <h3>Lira</h3>
+                            <span class="papel">Protagonista</span>
+                            <p>A protagonista. Jovem destemida, escolhida pela profecia para salvar o mundo. Possui o Poder da Luz.</p>
+                        </div>
+                    </li>
+                    <li class="personagem vila destaque">
+                        <div class="avatar" aria-hidden="true">M</div>
+                        <div>
+                            <h3>Morgana</h3>
+                            <span class="papel">Vilã</span>
+                            <p>A feiticeira das sombras. A principal vilã do jogo, quer destruir a luz e dominar tudo.</p>
+                        </div>
+                    </li>
+                    <li class="personagem">
+                        <div class="avatar" aria-hidden="true">Z</div>
+                        <h3>Zarek</h3>
+                        <span class="papel">Guerreiro e guia</span>
+                        <p>Um guerreiro experiente que guia Lira no início da jornada. Sabe muito sobre a história antiga.</p>
+                    </li>
+                    <li class="personagem">
+                        <div class="avatar" aria-hidden="true">E</div>
+                        <h3>Espírito da Floresta</h3>
+                        <span class="papel">Guardião da primeira torre</span>
+                        <p>Ajuda Lira com magias de cura e proteção.</p>
+                    </li>
+                    <li class="personagem">
+                        <div class="avatar" aria-hidden="true">A</div>
+                        <h3>Alaric</h3>
+                        <span class="papel">Mestre das armas</span>
+                        <p>Ensina Lira a aprimorar suas habilidades de combate.</p>
+                    </li>
+                    <li class="personagem">
+                        <div class="avatar" aria-hidden="true">G</div>
+                        <h3>Gaunty</h3>
+                        <span class="papel">Artesão</span>
+                        <p>Um habilidoso artesão que ajuda Lira a criar e aprimorar suas armas e armaduras. Localizado na Vila dos Ferreiros.</p>
+                    </li>
+                    <li class="personagem">
+                        <div class="avatar" aria-hidden="true">T</div>
+                        <h3>Thorek</h3>
+                        <span class="papel">Sábio</span>
+                        <p>Um antigo sábio que guarda os segredos do passado. Ajuda Lira a entender a história do mundo.</p>
+                    </li>
+                    <li class="personagem">
+                        <div class="avatar" aria-hidden="true">C</div>
+                        <h3>Clyan</h3>
+                        <span class="papel">Aliado misterioso</span>
+                        <p>Aparece em momentos cruciais. Sua lealdade é questionável, mas suas habilidades são inegáveis.</p>
+                    </li>
+                </ul>
             </div>
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>👂 Fale com Todos</h3>
-                <p>Os moradores das vilas dão dicas importantes, revelam locais escondidos e até oferecem itens gratuitos. Fale com todos os NPCs antes de seguir adiante!</p>
+        </section>
+
+        <section class="secao alt" id="galeria" aria-labelledby="titulo-galeria">
+            <div class="miolo">
+                <div class="cabeca-secao">
+                    <h2 class="titulo-secao" id="titulo-galeria">🖼️ Galeria</h2>
+                    <p class="subtitulo-secao">Imagens e artes do jogo. Em breve, as imagens reais serão colocadas aqui.</p>
+                </div>
+                <ul class="galeria-grid">
+                    <li class="quadro"><span class="moldura" aria-hidden="true">🌅</span>Cena de Abertura<small>Em breve</small></li>
+                    <li class="quadro"><span class="moldura" aria-hidden="true">🗺️</span>Mapa do Mundo<small>Em breve</small></li>
+                    <li class="quadro"><span class="moldura" aria-hidden="true">🌲</span>Torre da Floresta<small>Em breve</small></li>
+                    <li class="quadro"><span class="moldura" aria-hidden="true">✨</span>Lira — Personagem<small>Em breve</small></li>
+                    <li class="quadro"><span class="moldura" aria-hidden="true">👹</span>Chefe Final<small>Em breve</small></li>
+                    <li class="quadro"><span class="moldura" aria-hidden="true">🌄</span>Cena de Encerramento<small>Em breve</small></li>
+                </ul>
             </div>
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>📦 Itens Obrigatórios</h3>
-                <p>Em cada torre existe um item chave necessário para derrotar o chefe final daquela área. Sempre procure bem antes de enfrentar o chefe!</p>
+        </section>
+
+        <section class="secao" id="requisitos" aria-labelledby="titulo-requisitos">
+            <div class="miolo">
+                <div class="cabeca-secao">
+                    <h2 class="titulo-secao" id="titulo-requisitos">💻 Requisitos do Sistema</h2>
+                </div>
+                <div class="tabela-wrap">
+                    <table class="req-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Requisito</th>
+                                <th scope="col">Mínimo</th>
+                                <th scope="col">Recomendado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Sistema Operacional</th>
+                                <td data-label="Mínimo">Windows 10 64-bit</td>
+                                <td data-label="Recomendado">Windows 10/11 64-bit</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Processador</th>
+                                <td data-label="Mínimo">Intel Core i3 / AMD equivalente</td>
+                                <td data-label="Recomendado">Intel Core i5 / AMD Ryzen 5 ou superior</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Memória RAM</th>
+                                <td data-label="Mínimo">4 GB</td>
+                                <td data-label="Recomendado">8 GB ou mais</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Placa de Vídeo</th>
+                                <td data-label="Mínimo">Integrada ou 2 GB VRAM</td>
+                                <td data-label="Recomendado">Placa dedicada com 4 GB+ VRAM</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Armazenamento</th>
+                                <td data-label="Mínimo">2 GB disponíveis</td>
+                                <td data-label="Recomendado">2 GB disponíveis (SSD recomendado)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>🧩 Quebra-Cabeças</h3>
-                <p>Alguns puzzles exigem atenção aos detalhes. Observe o ambiente, cores e padrões. Às vezes, a solução está em algo que você já viu antes!</p>
+        </section>
+
+        <section class="secao alt" id="sobre" aria-labelledby="titulo-sobre">
+            <div class="miolo">
+                <div class="cabeca-secao">
+                    <h2 class="titulo-secao" id="titulo-sobre">ℹ️ Sobre o Jogo</h2>
+                </div>
+                <div class="sobre-layout">
+                    <p><strong>The Legend Of Aetheria — Guardian of Light</strong> é um jogo de aventura, história e ação 2D desenvolvido por Studios Aetheria. Inspirado nos clássicos de RPG com exploração, combates e uma história envolvente!</p>
+                    <div class="ficha">
+                        <dl>
+                            <div><dt>🎨 Desenvolvedor</dt><dd>Hugo Raphael de Miranda</dd></div>
+                            <div><dt>🛠️ Motor gráfico</dt><dd>Raylib (C++)</dd></div>
+                            <div><dt>📅 Versão</dt><dd>1.0 — Lançamento previsto em breve</dd></div>
+                        </dl>
+                        <a href="#" class="btn btn-primario" aria-disabled="true" tabindex="-1">Em desenvolvimento!</a>
+                    </div>
+                </div>
             </div>
-            <div class="dica-card" role="listitem" tabindex="0">
-                <h3>💾 Salve Sempre!</h3>
-                <p>O jogo tem 3 slots de salvamento no início do jogo. No decorrer da aventura, Salve sempre que possível, para não perder seu progresso!</p>
+        </section>
+
+        <section class="secao" id="informacoes" aria-labelledby="titulo-info">
+            <div class="miolo">
+                <div class="cabeca-secao">
+                    <h2 class="titulo-secao" id="titulo-info">Informações e contato</h2>
+                </div>
+                <div class="info-lista">
+                    <details id="privacidade">
+                        <summary>🔒 Política de Privacidade</summary>
+                        <div class="info-corpo">
+                            <p><strong>The Legend Of Aetheria — Guardian of Light</strong> respeita a privacidade de todos os visitantes e usuários.</p>
+                            <h3>📄 Coleta de dados</h3>
+                            <p>Este site não coleta, armazena ou compartilha dados pessoais dos visitantes sem consentimento explícito. Não usamos cookies de rastreamento.</p>
+                            <h3>🔐 Segurança</h3>
+                            <p>Todas as informações eventualmente fornecidas serão mantidas em segurança e nunca serão vendidas, trocadas ou transferidas para terceiros sem autorização.</p>
+                            <h3>🎮 Uso do jogo</h3>
+                            <p>Ao jogar <strong>The Legend Of Aetheria</strong>, você concorda com os termos de uso. O jogo é gratuito e desenvolvido de forma independente.</p>
+                        </div>
+                    </details>
+
+                    <details id="termos">
+                        <summary>📝 Termos de Uso</summary>
+                        <div class="info-corpo">
+                            <p>Ao acessar este site e utilizar o jogo, você concorda com os seguintes termos:</p>
+                            <h3>© Propriedade intelectual</h3>
+                            <p>Todos os conteúdos, incluindo personagens, história, artes, músicas, código e design do jogo e do site são propriedade de <strong>Hugo Raphael de Miranda e do Studios Aetheria</strong>. É proibida a reprodução, distribuição ou modificação sem autorização prévia por escrito.</p>
+                            <h3>🎮 Uso permitido</h3>
+                            <p>O jogo é disponibilizado para uso pessoal e não comercial. Você pode jogar, compartilhar capturas de tela e vídeos desde que dê os devidos créditos.</p>
+                            <h3>⚠️ Responsabilidade</h3>
+                            <p>O jogo é fornecido "como está", sem garantias explícitas. O desenvolvedor não se responsabiliza por danos ou problemas decorrentes do uso do software.</p>
+                            <h3>🔄 Atualizações</h3>
+                            <p>Estes termos podem ser atualizados a qualquer momento sem aviso prévio. Consulte esta página periodicamente.</p>
+                        </div>
+                    </details>
+
+                    <details id="contato-pagina">
+                        <summary>✉️ Contato</summary>
+                        <div class="info-corpo">
+                            <p>Tem dúvidas, sugestões, ou quer entrar em contato sobre o jogo?</p>
+                            <h3>👨‍💻 Desenvolvedor</h3>
+                            <p>Hugo Raphael de Miranda</p>
+                            <h3>🎮 Projeto</h3>
+                            <p>The Legend Of Aetheria — Guardian of Light</p>
+                            <h3>📧 E-mail</h3>
+                            <p>
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=studiosaetheria@gmail.com"
+                                   target="_blank" rel="noopener noreferrer"
+                                   aria-label="Enviar e-mail para studiosaetheria@gmail.com">studiosaetheria@gmail.com</a>
+                            </p>
+                            <h3>📍 Localização</h3>
+                            <p>Sabará — Minas Gerais, Brasil</p>
+                            <p style="margin-top:1rem">Fique à vontade para enviar mensagens com sugestões, ideias, relatos de bugs ou apenas para dizer olá! Responderemos assim que possível!</p>
+                        </div>
+                    </details>
+                </div>
             </div>
-        </div>
-    </section>
-    <section class="container" id="personagens" aria-labelledby="titulo-personagens">
-        <h2 id="titulo-personagens">👥 Personagens Principais</h2>
-        <div class="personagens-grid" role="list" aria-label="Lista de personagens">
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Lira</h3>
-                <p>A protagonista. Jovem destemida, escolhida pela profecia para salvar o mundo. Possui o Poder da Luz.</p>
-            </div>
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Zarek</h3>
-                <p>Um guerreiro experiente que guia Lira no início da jornada. Sabe muito sobre a história antiga.</p>
-            </div>
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Morgana</h3>
-                <p>A feiticeira das sombras. A principal vilã do jogo, quer destruir a luz e dominar tudo.</p>
-            </div>
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Espírito da Floresta</h3>
-                <p>Guardião da primeira torre. Ajuda Lira com magias de cura e proteção.</p>
-            </div>
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Alaric</h3>
-                <p>O mestre das armas. Ensina Lira a aprimorar suas habilidades de combate.</p>
-            </div>
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Gaunty</h3>
-                <p>Um habilidoso artesão que ajuda Lira a criar e aprimorar suas armas e armaduras. Localizado na Vila dos Ferreiros.</p>
-            </div>
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Thorek</h3>
-                <p>Um antigo sábio que guarda os segredos do passado. Ajuda Lira a entender a história do mundo.</p>
-            </div>
-            <div class="personagem-card" role="listitem" tabindex="0">
-                <h3>Clyan</h3>
-                <p>Um misterioso aliado que aparece em momentos cruciais. Sua lealdade é questionável, mas suas habilidades são inegáveis.</p>
-            </div>
-        </div>
-    </section>
-    <section class="container" id="galeria" aria-labelledby="titulo-galeria">
-        <h2 id="titulo-galeria">🖼️ Galeria (Futuras imagens serão colocadas aqui)</h2>
-        <p>Imagens e artes do jogo</p>
-        <div class="galeria-grid" role="list" aria-label="Imagens da galeria">
-            <div class="galeria-img" role="listitem" tabindex="0" aria-label="Imagem: Cena de Abertura">Cena de Abertura</div>
-            <div class="galeria-img" role="listitem" tabindex="0" aria-label="Imagem: Mapa do Mundo">Mapa do Mundo</div>
-            <div class="galeria-img" role="listitem" tabindex="0" aria-label="Imagem: Torre da Floresta">Torre da Floresta</div>
-            <div class="galeria-img" role="listitem" tabindex="0" aria-label="Imagem: Lira — Personagem">Lira — Personagem</div>
-            <div class="galeria-img" role="listitem" tabindex="0" aria-label="Imagem: Chefe Final">Chefe Final</div>
-            <div class="galeria-img" role="listitem" tabindex="0" aria-label="Imagem: Cena de Encerramento">Cena de Encerramento</div>
-        </div>
-    </section>
-    <section class="container" id="requisitos" aria-labelledby="titulo-requisitos">
-        <h2 id="titulo-requisitos">💻 Requisitos do Sistema</h2>
-        <table class="req-table" aria-label="Requisitos do sistema">
-            <thead>
-                <tr>
-                    <th scope="col">Requisito</th>
-                    <th scope="col">Mínimo</th>
-                    <th scope="col">Recomendado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Sistema Operacional</td>
-                    <td>Windows 10 64-bit</td>
-                    <td>Windows 10/11 64-bit</td>
-                </tr>
-                <tr>
-                    <td>Processador</td>
-                    <td>Intel Core i3 / AMD equivalente</td>
-                    <td>Intel Core i5 / AMD Ryzen 5 ou superior</td>
-                </tr>
-                <tr>
-                    <td>Memória RAM</td>
-                    <td>4 GB</td>
-                    <td>8 GB ou mais</td>
-                </tr>
-                <tr>
-                    <td>Placa de Vídeo</td>
-                    <td>Integrada ou 2 GB VRAM</td>
-                    <td>Placa dedicada com 4 GB+ VRAM</td>
-                </tr>
-                <tr>
-                    <td>Armazenamento</td>
-                    <td>2 GB disponíveis</td>
-                    <td>2 GB disponíveis (SSD recomendado)</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-    <section class="container contato" id="contato" aria-labelledby="titulo-sobre">
-        <h2 id="titulo-sobre">ℹ️ Sobre o Jogo</h2>
-        <p><strong>The Legend Of Aetheria — Guardian of Light</strong> é um jogo de aventura, história e ação 2D desenvolvido por Studios Aetheria. Inspirado nos clássicos de RPG com exploração, combates e uma história envolvente!</p>
-        <br>
-        <p><strong>🎨 Desenvolvedor:</strong> Hugo Raphael de Miranda<br>
-        <strong>🛠️ Motor Gráfico:</strong> Raylib (C++)<br>
-        <strong>📅 Versão:</strong> 1.0 — Lançamento previsto em breve</p>
-        <br>
-        <a href="#" class="btn" aria-disabled="true" role="button">Em Desenvolvimento!</a>
-    </section>
+        </section>
     </main>
-    <footer role="contentinfo">
+
+    <footer>
         <p>&copy; 2026 The Legend Of Aetheria — Guardian of Light. Todos os direitos reservados.</p>
         <p>Desenvolvido por: Studios Aetheria</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: #aaa;">
-            <a href="#privacidade">Política de Privacidade</a> | 
-            <a href="#termos">Termos de Uso</a> | 
+        <div class="links">
+            <a href="#privacidade">Política de Privacidade</a>
+            <a href="#termos">Termos de Uso</a>
             <a href="#contato-pagina">Contato</a>
-        </p>
-        <section class="container" id="privacidade" aria-labelledby="titulo-privacidade">
-            <h2 id="titulo-privacidade">🔒 Política de Privacidade</h2>
-            <p><strong>The Legend Of Aetheria — Guardian of Light</strong> respeita a privacidade de todos os visitantes e usuários.</p>
-            <br>
-            <h3>📄 Coleta de Dados</h3>
-            <p>Este site não coleta, armazena ou compartilha dados pessoais dos visitantes sem consentimento explícito. Não usamos cookies de rastreamento.</p>
-            <br>
-            <h3>🔐 Segurança</h3>
-            <p>Todas as informações eventualmente fornecidas serão mantidas em segurança e nunca serão vendidas, trocadas ou transferidas para terceiros sem autorização.</p>
-            <br>
-            <h3>🎮 Uso do Jogo</h3>
-            <p>Ao jogar <strong>The Legend Of Aetheria</strong>, você concorda com os termos de uso. O jogo é gratuito e desenvolvido de forma independente.</p>
-        </section>
-        <section class="container" id="termos" aria-labelledby="titulo-termos">
-            <h2 id="titulo-termos">📝 Termos de Uso</h2>
-            <p>Ao acessar este site e utilizar o jogo, você concorda com os seguintes termos:</p>
-            <br>
-            <h3>© Propriedade Intelectual</h3>
-            <p>Todos os conteúdos, incluindo personagens, história, artes, músicas, código e design do jogo e do site são propriedade de <strong>Hugo Raphael de Miranda e do Studios Aetheria</strong>. É proibida a reprodução, distribuição ou modificação sem autorização prévia por escrito.</p>
-            <br>
-            <h3>🎮 Uso Permitido</h3>
-            <p>O jogo é disponibilizado para uso pessoal e não comercial. Você pode jogar, compartilhar capturas de tela e vídeos desde que dê os devidos créditos.</p>
-            <br>
-            <h3>⚠️ Responsabilidade</h3>
-            <p>O jogo é fornecido "como está", sem garantias explícitas. O desenvolvedor não se responsabiliza por danos ou problemas decorrentes do uso do software.</p>
-            <br>
-            <h3>🔄 Atualizações</h3>
-            <p>Estes termos podem ser atualizados a qualquer momento sem aviso prévio. Consulte esta página periodicamente.</p>
-        </section>
-        <section class="container" id="contato-pagina" aria-labelledby="titulo-contato">
-            <h2 id="titulo-contato">✉️ Contato</h2>
-            <p>Tem dúvidas, sugestões, ou quer entrar em contato sobre o jogo?</p>
-            <br>
-            <p><strong>👨‍💻 Desenvolvedor:</strong> Hugo Raphael de Miranda</p>
-            <p><strong>🎮 Projeto:</strong> The Legend Of Aetheria — Guardian of Light</p>
-            <p><strong>📧 E-mail:</strong> 
-                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=studiosaetheria@gmail.com" 
-                   target="_blank" rel="noopener noreferrer"
-                   aria-label="Enviar e-mail para studiosaetheria@gmail.com">
-                    studiosaetheria@gmail.com
-                </a>
-            </p>
-            <p><strong>📍 Localização:</strong> Sabará — Minas Gerais, Brasil</p>
-            <br>
-            <p>Fique à vontade para enviar mensagens com sugestões, ideias, relatos de bugs ou apenas para dizer olá!</p>
-            <p>Responderemos assim que possível!</p>
-        </section>
+        </div>
     </footer>
-    <button id="btn-topo" aria-label="Voltar ao topo da página">↑</button>
-    <!-- FUNCIONA NO PC E NO CELULAR — BOTÕES APARECEM SÓ AO CLICAR/PASSAR -->
-    <script>
-        const sinteseVoz = window.speechSynthesis;
-        let jaTocouTela = false;
-        const grupoAudio = document.getElementById('grupo-audio');
-        let menuAberto = false;
 
-        // LIBERA A VOZ NO CELULAR — UMA SÓ VEZ
-        function liberarVozNoCelular() {
-            if (!jaTocouTela) {
-                jaTocouTela = true;
-                const teste = new SpeechSynthesisUtterance("");
-                teste.volume = 0;
-                teste.lang = 'pt-BR';
-                sinteseVoz.speak(teste);
-                sinteseVoz.cancel();
+    <!-- Painel de acessibilidade -->
+    <div class="acc" id="acc">
+        <button class="acc-toggle" id="acc-toggle" aria-expanded="false" aria-controls="acc-painel" aria-label="Abrir ferramentas de acessibilidade">♿</button>
+        <div class="acc-painel" id="acc-painel" role="group" aria-label="Ferramentas de acessibilidade">
+            <h2>Acessibilidade</h2>
+            <div class="acc-grupo">
+                <button class="acc-btn largo" id="btn-ler" aria-pressed="false">🔊 Ouvir texto</button>
+                <button class="acc-btn" id="btn-pausar" disabled>⏸️ Pausar</button>
+                <button class="acc-btn" id="btn-parar" disabled>⏹️ Parar</button>
+            </div>
+            <div class="acc-grupo">
+                <button class="acc-btn" id="btn-aumentar" aria-label="Aumentar tamanho da letra">A+</button>
+                <button class="acc-btn" id="btn-diminuir" aria-label="Diminuir tamanho da letra">A−</button>
+                <button class="acc-btn" id="btn-alto-contraste" aria-pressed="false">👁️ Contraste</button>
+            </div>
+            <p class="acc-status" id="acc-status" role="status" aria-live="polite"></p>
+        </div>
+    </div>
+
+    <button id="btn-topo" aria-label="Voltar ao topo da página">↑</button>
+
+    <script>
+    (function () {
+        'use strict';
+
+        /* ---------- util: armazenamento seguro ---------- */
+        function guardar(chave, valor) { try { localStorage.setItem(chave, valor); } catch (e) {} }
+        function ler(chave) { try { return localStorage.getItem(chave); } catch (e) { return null; } }
+
+        /* ---------- menu mobile ---------- */
+        var btnMenu = document.getElementById('btn-menu');
+        var menu = document.getElementById('menu-links');
+        function fecharMenu() {
+            menu.classList.remove('aberto');
+            btnMenu.setAttribute('aria-expanded', 'false');
+            btnMenu.setAttribute('aria-label', 'Abrir menu');
+        }
+        btnMenu.addEventListener('click', function () {
+            var abrir = !menu.classList.contains('aberto');
+            menu.classList.toggle('aberto', abrir);
+            btnMenu.setAttribute('aria-expanded', String(abrir));
+            btnMenu.setAttribute('aria-label', abrir ? 'Fechar menu' : 'Abrir menu');
+        });
+        menu.addEventListener('click', function (e) { if (e.target.tagName === 'A') fecharMenu(); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { fecharMenu(); fecharPainel(); } });
+
+        /* ---------- link ativo no menu ---------- */
+        var links = {};
+        document.querySelectorAll('.nav-links a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+        if ('IntersectionObserver' in window) {
+            var obs = new IntersectionObserver(function (entradas) {
+                entradas.forEach(function (en) {
+                    if (en.isIntersecting && links[en.target.id]) {
+                        Object.keys(links).forEach(function (k) { links[k].classList.remove('ativo'); });
+                        links[en.target.id].classList.add('ativo');
+                    }
+                });
+            }, { rootMargin: '-45% 0px -50% 0px' });
+            Object.keys(links).forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) obs.observe(el);
+            });
+        }
+
+        /* ---------- abrir <details> ao navegar pelo link do rodapé ---------- */
+        function abrirDetalhes() {
+            var id = decodeURIComponent(location.hash.slice(1));
+            if (!id) return;
+            var el = document.getElementById(id);
+            if (el && el.tagName === 'DETAILS') el.open = true;
+        }
+        window.addEventListener('hashchange', abrirDetalhes);
+        abrirDetalhes();
+
+        /* ---------- painel de acessibilidade ---------- */
+        var acc = document.getElementById('acc');
+        var accToggle = document.getElementById('acc-toggle');
+        function fecharPainel() {
+            acc.classList.remove('aberto');
+            accToggle.setAttribute('aria-expanded', 'false');
+        }
+        accToggle.addEventListener('click', function () {
+            var abrir = !acc.classList.contains('aberto');
+            acc.classList.toggle('aberto', abrir);
+            accToggle.setAttribute('aria-expanded', String(abrir));
+        });
+        document.addEventListener('click', function (e) { if (!acc.contains(e.target)) fecharPainel(); });
+
+        /* ---------- tamanho da fonte ---------- */
+        var tamanho = parseInt(ler('aetheria-fonte'), 10) || 16;
+        function aplicarFonte() { document.documentElement.style.fontSize = tamanho + 'px'; guardar('aetheria-fonte', tamanho); }
+        aplicarFonte();
+        document.getElementById('btn-aumentar').addEventListener('click', function () { if (tamanho < 28) { tamanho += 2; aplicarFonte(); } });
+        document.getElementById('btn-diminuir').addEventListener('click', function () { if (tamanho > 12) { tamanho -= 2; aplicarFonte(); } });
+
+        /* ---------- alto contraste ---------- */
+        var btnContraste = document.getElementById('btn-alto-contraste');
+        function aplicarContraste(ativo) {
+            document.body.classList.toggle('alto-contraste', ativo);
+            btnContraste.setAttribute('aria-pressed', String(ativo));
+            guardar('aetheria-contraste', ativo ? '1' : '0');
+        }
+        aplicarContraste(ler('aetheria-contraste') === '1');
+        btnContraste.addEventListener('click', function () { aplicarContraste(!document.body.classList.contains('alto-contraste')); });
+
+        /* ---------- voltar ao topo ---------- */
+        var btnTopo = document.getElementById('btn-topo');
+        window.addEventListener('scroll', function () {
+            btnTopo.style.display = window.scrollY > 400 ? 'block' : 'none';
+        }, { passive: true });
+        btnTopo.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        /* =====================================================
+           OUVIR TEXTO (funciona no celular)
+           Por que o antigo não tocava no celular:
+           - o navegador do celular costuma ignorar/cortar textos longos
+             em uma única fala -> aqui o texto é dividido em trechos curtos;
+           - cancel() seguido de speak() no mesmo instante derruba a fala
+             no Android -> aqui só cancelamos se houver algo falando;
+           - a voz em pt-BR carrega depois da página -> aqui ela é
+             escolhida quando a lista de vozes fica pronta;
+           - speak() precisa ser chamado dentro do clique do usuário.
+           ===================================================== */
+        var sintese = ('speechSynthesis' in window) ? window.speechSynthesis : null;
+        var btnLer = document.getElementById('btn-ler');
+        var btnPausar = document.getElementById('btn-pausar');
+        var btnParar = document.getElementById('btn-parar');
+        var status = document.getElementById('acc-status');
+
+        var voz = null, trechos = [], indice = 0, lendo = false, iniciou = false, sessao = 0, avisoTimer = null;
+
+        function escolherVoz() {
+            if (!sintese) return;
+            var vozes = sintese.getVoices() || [];
+            voz = null;
+            for (var i = 0; i < vozes.length; i++) {
+                if ((vozes[i].lang || '').replace('_', '-').toLowerCase() === 'pt-br') { voz = vozes[i]; break; }
+            }
+            if (!voz) {
+                for (var j = 0; j < vozes.length; j++) {
+                    if ((vozes[j].lang || '').toLowerCase().indexOf('pt') === 0) { voz = vozes[j]; break; }
+                }
             }
         }
-        // Libera com o PRIMEIRO toque/clique em QUALQUER lugar
-        document.addEventListener('click', liberarVozNoCelular, { once: true });
-        document.addEventListener('touchstart', liberarVozNoCelular, { once: true });
+        if (sintese) {
+            escolherVoz();
+            if (typeof sintese.addEventListener === 'function') sintese.addEventListener('voiceschanged', escolherVoz);
+            else sintese.onvoiceschanged = escolherVoz;
+        } else {
+            btnLer.disabled = true;
+            status.textContent = 'Seu navegador não suporta leitura em voz alta.';
+        }
 
-        // No celular: clique em Ouvir Texto mostra/esconde os botões extras
-        document.getElementById('btn-ler').addEventListener('click', (e) => {
-            e.stopPropagation();
-            menuAberto = !menuAberto;
-            if (menuAberto) {
-                grupoAudio.classList.add('ativo');
-            } else {
-                grupoAudio.classList.remove('ativo');
-            }
-        });
-
-        // Fecha o menu se clicar FORA dele
-        document.addEventListener('click', (e) => {
-            if (!grupoAudio.contains(e.target)) {
-                grupoAudio.classList.remove('ativo');
-                menuAberto = false;
-            }
-        });
-
-        //  OUVIR TEXTO — AGORA LIBERADO ANTES DE FALAR!
-        document.getElementById('btn-ler').addEventListener('click', () => {
-            sinteseVoz.cancel();
-            const conteudo = document.getElementById('conteudo-principal').innerText;
-            const fala = new SpeechSynthesisUtterance(conteudo);
-            fala.lang = 'pt-BR';
-            fala.volume = 1;
-            fala.rate = 1;
-            fala.pitch = 1.1;
-            sinteseVoz.speak(fala);
-        });
-
-        //  PAUSAR/DESPAUSAR
-        document.getElementById('btn-pausar').addEventListener('click', () => {
-            if (sinteseVoz.speaking) {
-                if (sinteseVoz.paused) {
-                    sinteseVoz.resume();
-                } else {
-                    sinteseVoz.pause();
+        function montarTrechos(texto) {
+            texto = texto.replace(/\s+/g, ' ').trim();
+            var frases = texto.match(/[^.!?…:]+[.!?…:]*/g) || [texto];
+            var saida = [], atual = '';
+            frases.forEach(function (f) {
+                f = f.trim();
+                if (!f) return;
+                while (f.length > 180) {
+                    var corte = f.lastIndexOf(' ', 180);
+                    if (corte < 60) corte = 180;
+                    if (atual) { saida.push(atual); atual = ''; }
+                    saida.push(f.slice(0, corte).trim());
+                    f = f.slice(corte).trim();
                 }
-            }
-        });
-
-        //  PARAR
-        document.getElementById('btn-parar').addEventListener('click', () => {
-            sinteseVoz.cancel();
-            grupoAudio.classList.remove('ativo');
-            menuAberto = false;
-        });
-
-        // A+ FONTE
-        let tamanhoFonte = 16;
-        document.getElementById('btn-aumentar').addEventListener('click', () => {
-            if (tamanhoFonte < 28) {
-                tamanhoFonte += 2;
-                document.documentElement.style.setProperty('--tamanho-fonte', tamanhoFonte + 'px');
-            }
-        });
-
-        // A- FONTE
-        document.getElementById('btn-diminuir').addEventListener('click', () => {
-            if (tamanhoFonte > 12) {
-                tamanhoFonte -= 2;
-                document.documentElement.style.setProperty('--tamanho-fonte', tamanhoFonte + 'px');
-            }
-        });
-
-        // ALTO CONTRASTE
-        let altoContraste = false;
-        document.getElementById('btn-alto-contraste').addEventListener('click', () => {
-            altoContraste = !altoContraste;
-            const root = document.documentElement;
-            if (altoContraste) {
-                root.style.setProperty('--cor-fundo', '#000000');
-                root.style.setProperty('--cor-texto', '#ffffff');
-                root.style.setProperty('--cor-card', '#111111');
-                root.style.setProperty('--cor-destaque', '#ffff00');
-                root.style.setProperty('--cor-destaque-escuro', '#cc9900');
-            } else {
-                root.style.setProperty('--cor-fundo', '#0f0f1a');
-                root.style.removeProperty('--cor-texto');
-                root.style.removeProperty('--cor-card');
-                root.style.removeProperty('--cor-destaque');
-                root.style.removeProperty('--cor-destaque-escuro');
-            }
-        });
-
-        //  VOLTAR AO TOPO
-        const btnTopo = document.getElementById('btn-topo');
-        window.addEventListener('scroll', () => {
-            btnTopo.style.display = window.scrollY > 300 ? 'block' : 'none';
-        }, { passive: true });
-
-        btnTopo.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // LINKS SUAVES
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const alvoId = this.getAttribute('href');
-                if (alvoId === '#') return;
-                const alvo = document.querySelector(alvoId);
-                if (alvo) {
-                    alvo.scrollIntoView({ behavior: 'smooth' });
-                }
+                if ((atual + ' ' + f).length > 180) { if (atual) saida.push(atual); atual = f; }
+                else { atual = atual ? atual + ' ' + f : f; }
             });
+            if (atual) saida.push(atual);
+            return saida;
+        }
+
+        function textoDaPagina() {
+            var clone = document.getElementById('conteudo-principal').cloneNode(true);
+            clone.querySelectorAll('[aria-hidden="true"], script, style').forEach(function (n) { n.remove(); });
+            return clone.textContent || '';
+        }
+
+        function atualizarBotoes() {
+            btnLer.setAttribute('aria-pressed', String(lendo));
+            btnLer.textContent = lendo ? '⏹️ Parar de ouvir' : '🔊 Ouvir texto';
+            btnPausar.disabled = !lendo;
+            btnParar.disabled = !lendo;
+            if (!lendo) btnPausar.textContent = '⏸️ Pausar';
+        }
+
+        function pararTudo(mensagem) {
+            sessao++;
+            lendo = false;
+            clearTimeout(avisoTimer);
+            if (sintese) sintese.cancel();
+            status.textContent = mensagem || '';
+            atualizarBotoes();
+        }
+
+        function falarTrecho(minhaSessao) {
+            if (minhaSessao !== sessao || !lendo) return;
+            if (indice >= trechos.length) { pararTudo('Leitura concluída.'); return; }
+            var u = new SpeechSynthesisUtterance(trechos[indice]);
+            u.lang = 'pt-BR';
+            u.rate = 1;
+            u.pitch = 1;
+            u.volume = 1;
+            if (voz) u.voice = voz;
+            u.onstart = function () { iniciou = true; clearTimeout(avisoTimer); };
+            u.onend = function () {
+                if (minhaSessao !== sessao || !lendo) return;
+                indice++;
+                falarTrecho(minhaSessao);
+            };
+            u.onerror = function (ev) {
+                if (minhaSessao !== sessao) return;
+                if (ev && (ev.error === 'interrupted' || ev.error === 'canceled')) return;
+                pararTudo('Não foi possível reproduzir o áudio neste aparelho.');
+            };
+            sintese.speak(u);
+        }
+
+        btnLer.addEventListener('click', function () {
+            if (!sintese) return;
+            if (lendo) { pararTudo('Leitura parada.'); return; }
+
+            // tudo abaixo roda DENTRO do clique (necessário no celular)
+            if (sintese.speaking || sintese.pending || sintese.paused) sintese.cancel();
+            if (!voz) escolherVoz();
+
+            trechos = montarTrechos(textoDaPagina());
+            indice = 0;
+            iniciou = false;
+            lendo = true;
+            sessao++;
+            var minha = sessao;
+            status.textContent = 'Lendo o conteúdo da página…';
+            atualizarBotoes();
+
+            // alguns navegadores ficam "pausados" depois de um cancel
+            if (sintese.paused) sintese.resume();
+            falarTrecho(minha);
+
+            // se nada começou a tocar em 3s, orienta a pessoa
+            clearTimeout(avisoTimer);
+            avisoTimer = setTimeout(function () {
+                if (lendo && !iniciou && minha === sessao) {
+                    status.textContent = 'Sem som? Aumente o volume de mídia, desligue o modo silencioso e confira se há uma voz em português instalada no aparelho.';
+                }
+            }, 3000);
         });
 
-        // PARAR FALA AO SAIR
-        window.addEventListener('beforeunload', () => sinteseVoz.cancel());
+        btnPausar.addEventListener('click', function () {
+            if (!sintese || !lendo) return;
+            if (sintese.paused) {
+                sintese.resume();
+                btnPausar.textContent = '⏸️ Pausar';
+                status.textContent = 'Lendo o conteúdo da página…';
+            } else {
+                sintese.pause();
+                btnPausar.textContent = '▶️ Continuar';
+                status.textContent = 'Leitura pausada.';
+            }
+        });
+
+        btnParar.addEventListener('click', function () { pararTudo('Leitura parada.'); });
+
+        window.addEventListener('beforeunload', function () { if (sintese) sintese.cancel(); });
+        document.addEventListener('visibilitychange', function () { if (document.hidden && lendo) pararTudo('Leitura parada.'); });
+    })();
     </script>
 </body>
 </html>
